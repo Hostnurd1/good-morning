@@ -5,25 +5,14 @@
   <title>Доброе утро, Алёна!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      width: 100vw;
-      min-height: 100vh;
-    }
+    html, body { height: 100%; margin: 0; padding: 0; width: 100vw; min-height: 100vh; }
     body {
       min-height: 100vh;
       background: linear-gradient(270deg, #c0e0fc, #f6d2e0, #b2ffd6, #fde9b3, #f3b6ff, #b8e4ff);
       background-size: 400% 400%;
       animation: gradientBG 15s ease-in-out infinite;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      transition: background 0.6s;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      overflow: hidden; transition: background 0.6s;
     }
     @keyframes gradientBG {
       0% {background-position: 0% 50%;}
@@ -32,151 +21,19 @@
       75% {background-position: 0% 50%;}
       100% {background-position: 0% 50%;}
     }
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100vw;
-      position: relative;
-      margin-top: 5vh;
-    }
-    .emoji {
-      position: relative;
-      display: block;
-      text-align: center;
-      font-size: 2.5rem;
-      margin-bottom: 0.7rem;
-      height: 2.7rem;
-      line-height: 2.7rem;
-      transition: opacity 0.28s;
-      opacity: 0;
-      user-select: none;
-      pointer-events: none;
-      width: 100vw;
-    }
-    .emoji.visible {
-      opacity: 1;
-    }
-    .goodmorning {
-      font-size: 2.3rem;
-      margin-bottom: 1.1rem;
-      color: #383862;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-shadow: 0 2px 8px #fff8;
-      transition: 0.2s;
-      text-align: center;
-    }
-    .main-question {
-      font-size: 1.5rem;
-      font-weight: 900;
-      color: #36417e;
-      text-align: center;
-      margin-bottom: 0.5rem;
-      text-shadow: 0 2px 8px #fff8;
-      transition: 0.2s;
-    }
-    .motivation {
-      font-size: 1.2rem;
-      color: #fff;
-      background: linear-gradient(90deg, #8ee3f8, #ffd8e6 90%);
-      padding: 0.32em 1em;
-      border-radius: 1.2em;
-      margin-bottom: 1.4rem;
-      font-weight: 700;
-      min-height: 1.8rem;
-      text-align: center;
-      transition: 0.18s;
-      max-width: 90vw;
-      box-shadow: 0 2px 12px #d3e9fa65;
-      display: inline-block;
-    }
-    .btns {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100vw;
-      min-height: 8rem;
-      position: relative;
-    }
-    .yes-btn {
-      background: linear-gradient(90deg, #00b09b 0%, #96c93d 100%);
-      color: #fff;
-      font-size: 1.7rem;
-      font-weight: bold;
-      padding: 1.1rem 2.7rem;
-      border: none;
-      border-radius: 1.3rem;
-      margin-bottom: 1.2rem;
-      margin-top: 0.6rem;
-      transition: font-size 0.28s cubic-bezier(.6,1.6,.3,1), 
-                  padding 0.28s cubic-bezier(.6,1.6,.3,1),
-                  border-radius 0.3s, width 0.25s, height 0.25s;
-      cursor: pointer;
-      box-shadow: 0 4px 16px #b3eabf61;
-      z-index: 2;
-      position: relative;
-      min-width: 180px;
-      min-height: 60px;
-    }
-    .yes-btn.fullscreen {
-      position: fixed !important;
-      left: 0 !important; top: 0 !important;
-      width: 100vw !important; height: 100vh !important;
-      margin: 0 !important;
-      border-radius: 0 !important;
-      font-size: 7vw !important;
-      padding: 0 !important;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 150;
-      transition: all 0.5s cubic-bezier(.6,1.6,.3,1);
-    }
-    .no-btn {
-      background: linear-gradient(90deg, #ef473a 0%, #cb2d3e 100%);
-      color: #fff;
-      font-size: 1.1rem;
-      font-weight: bold;
-      padding: 0.7rem 2rem;
-      border: none;
-      border-radius: 1.2rem;
-      margin-top: 10px;
-      transition: font-size 0.12s, padding 0.12s, margin-top 0.3s;
-      cursor: pointer;
-      min-width: 95px;
-      min-height: 40px;
-      user-select: none;
-      display: block;
-      position: static;
-      z-index: 5;
-    }
-    .confetti {
-      position: fixed;
-      left: 0; top: 0; width: 100vw; height: 100vh;
-      pointer-events: none;
-      z-index: 999;
-    }
-    .next-page {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: fixed;
-      left: 0; top: 0; width: 100vw; height: 100vh;
-      background: linear-gradient(120deg, #a7e7b7 0%, #b3cfff 100%);
-      z-index: 200;
-      font-size: 2rem;
-      font-weight: 900;
-      color: #267c40;
-      letter-spacing: 1.5px;
-      text-align: center;
-      opacity: 0;
-      animation: fadeIn 0.7s forwards;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
+    .container { display: flex; flex-direction: column; align-items: center; width: 100vw; position: relative; margin-top: 5vh; }
+    .emoji { position: relative; display: block; text-align: center; font-size: 2.5rem; margin-bottom: 0.7rem; height: 2.7rem; line-height: 2.7rem; transition: opacity 0.28s; opacity: 0; user-select: none; pointer-events: none; width: 100vw; }
+    .emoji.visible { opacity: 1; }
+    .goodmorning { font-size: 2.3rem; margin-bottom: 1.1rem; color: #383862; font-weight: 800; letter-spacing: 1px; text-shadow: 0 2px 8px #fff8; transition: 0.2s; text-align: center; }
+    .main-question { font-size: 1.5rem; font-weight: 900; color: #36417e; text-align: center; margin-bottom: 0.5rem; text-shadow: 0 2px 8px #fff8; transition: 0.2s; }
+    .motivation { font-size: 1.2rem; color: #fff; background: linear-gradient(90deg, #8ee3f8, #ffd8e6 90%); padding: 0.32em 1em; border-radius: 1.2em; margin-bottom: 1.4rem; font-weight: 700; min-height: 1.8rem; text-align: center; transition: 0.18s; max-width: 90vw; box-shadow: 0 2px 12px #d3e9fa65; display: inline-block; }
+    .btns { display: flex; flex-direction: column; align-items: center; width: 100vw; min-height: 8rem; position: relative; }
+    .yes-btn { background: linear-gradient(90deg, #00b09b 0%, #96c93d 100%); color: #fff; font-size: 1.7rem; font-weight: bold; padding: 1.1rem 2.7rem; border: none; border-radius: 1.3rem; margin-bottom: 1.2rem; margin-top: 0.6rem; transition: font-size 0.28s cubic-bezier(.6,1.6,.3,1), padding 0.28s cubic-bezier(.6,1.6,.3,1), border-radius 0.3s, width 0.25s, height 0.25s; cursor: pointer; box-shadow: 0 4px 16px #b3eabf61; z-index: 2; position: relative; min-width: 180px; min-height: 60px; }
+    .yes-btn.fullscreen { position: fixed !important; left: 0 !important; top: 0 !important; width: 100vw !important; height: 100vh !important; margin: 0 !important; border-radius: 0 !important; font-size: 7vw !important; padding: 0 !important; display: flex; align-items: center; justify-content: center; z-index: 150; transition: all 0.5s cubic-bezier(.6,1.6,.3,1);}
+    .no-btn { background: linear-gradient(90deg, #ef473a 0%, #cb2d3e 100%); color: #fff; font-size: 1.1rem; font-weight: bold; padding: 0.7rem 2rem; border: none; border-radius: 1.2rem; margin-top: 10px; transition: font-size 0.12s, padding 0.12s, margin-top 0.3s; cursor: pointer; min-width: 95px; min-height: 40px; user-select: none; display: block; position: static; z-index: 5;}
+    .confetti { position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 999; }
+    .next-page { display: flex; align-items: center; justify-content: center; position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; background: linear-gradient(120deg, #a7e7b7 0%, #b3cfff 100%); z-index: 200; font-size: 2rem; font-weight: 900; color: #267c40; letter-spacing: 1.5px; text-align: center; opacity: 0; animation: fadeIn 0.7s forwards; }
+    @keyframes fadeIn { from { opacity: 0; } to   { opacity: 1; } }
     @media (max-width: 600px) {
       .emoji { font-size: 1.45rem; height: 1.7rem; line-height: 1.7rem; margin-bottom: 0.3rem;}
       .goodmorning { font-size: 1.3rem; }
@@ -256,7 +113,6 @@
       }
     }
 
-    // Смайлик — появляется при первом нажатии на "нет", дальше меняется
     function showEmoji() {
       emoji.classList.add("visible");
       emoji.textContent = emojis[Math.min(noClicks-1, emojis.length-1)];
@@ -267,18 +123,16 @@
       noClicks++;
       let newNo = noPhrases[Math.min(noClicks, noPhrases.length - 1)];
       noBtn.textContent = newNo;
-      // Мотивация
       if (noClicks-1 < supportPhrases.length) {
         motivation.textContent = supportPhrases[noClicks-1];
       }
       growYesBtn();
-      // Показываем или меняем смайлик
       showEmoji();
     };
 
     yesBtn.onclick = () => {
-      // Только в самом финале (зелёный экран + ДА) — перекидываем на заглушку
       if (fullscreened && gameEnded) {
+        // Переброс только если ФИНАЛ
         mainContent.classList.add('hidden');
         nextPageMsg.classList.remove('hidden');
         return;
@@ -294,7 +148,7 @@
       mainQ.classList.add('hidden');
       motivation.classList.add('hidden');
       noBtn.classList.add('hidden');
-      emoji.classList.remove("visible"); // Смайлик скрываем в финале
+      emoji.classList.remove("visible");
       emoji.textContent = "";
       yesBtn.classList.add('fullscreen');
       yesBtn.textContent = "ДА" + "!".repeat(yesLevel + 2);
@@ -343,14 +197,10 @@
       draw();
     }
 
-    window.onload = () => {
-      setNoBtnPos();
-      emoji.classList.remove("visible");
-      emoji.textContent = "";
-      fullscreened = false;
-      gameEnded = false;
-    };
+    // ВАЖНО: убираем любой сброс флагов тут!
+    window.onload = () => setNoBtnPos();
     window.onresize = () => { if (!gameEnded) setNoBtnPos(); };
   </script>
 </body>
 </html>
+

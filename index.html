@@ -5,43 +5,74 @@
   <title>Доброе утро!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
     body {
       font-family: 'Segoe UI', sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       min-height: 100vh;
       background: linear-gradient(120deg, #FFDEE9 0%, #B5FFFC 100%);
+      overflow-x: hidden;
+      position: relative;
     }
     .question {
-      margin-top: 20px;
+      margin-top: 40px;
       font-size: 2em;
       font-weight: 700;
       color: #8a3559;
       text-align: center;
       margin-bottom: 40px;
+      z-index: 2;
+      position: relative;
     }
     .buttons {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 20px;
+      z-index: 2;
+      position: relative;
+    }
+    .yes-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 300px;
+      height: 110px;
+      background: #36b545;
+      border-radius: 32px;
+      transition: 
+        width 0.25s cubic-bezier(.39,.58,.57,1.27),
+        height 0.25s cubic-bezier(.39,.58,.57,1.27),
+        border-radius 0.3s,
+        left 0.25s,
+        top 0.25s;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 6px 32px #36b5451b;
+      margin-bottom: 8px;
+      overflow: hidden;
+      will-change: width, height, border-radius, left, top;
     }
     #yes-btn {
-      padding: 16px 32px;
-      background: #36b545;
-      color: #fff;
-      font-size: 2em;
-      font-weight: 700;
+      background: transparent;
       border: none;
-      border-radius: 20px;
-      transition: all 0.2s cubic-bezier(.39,.58,.57,1.27);
-      box-shadow: 0 6px 32px #36b5451b;
+      color: #fff;
+      font-size: 3em;
+      font-weight: 900;
+      width: 100%;
+      height: 100%;
       cursor: pointer;
-      margin-bottom: 8px;
-      min-width: 160px;
+      transition: font-size 0.2s, color 0.2s;
       user-select: none;
+      z-index: 3;
+      outline: none;
     }
     #no-btn {
       padding: 14px 30px;
@@ -54,29 +85,57 @@
       transition: all 0.2s cubic-bezier(.39,.58,.57,1.27);
       cursor: pointer;
       user-select: none;
+      margin-top: 12px;
+      z-index: 5;
+      position: relative;
     }
     @media (max-width: 500px) {
-      .question { font-size: 1.2em; }
-      #yes-btn { font-size: 1.2em; min-width: 110px;}
+      .question { font-size: 1.1em; }
+      .yes-container { width: 170px; height: 70px;}
+      #yes-btn { font-size: 2em;}
       #no-btn { font-size: 1em; }
+    }
+    /* Fullscreen green on finish */
+    .fullscreen {
+      width: 100vw !important;
+      height: 100vh !important;
+      border-radius: 0 !important;
+      position: fixed !important;
+      left: 0 !important;
+      top: 0 !important;
+      margin: 0 !important;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: none !important;
+      transition: all 0.4s cubic-bezier(.39,.58,.57,1.27);
+    }
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
     }
   </style>
 </head>
 <body>
-  <div class="question">
-    Сегодня важный день! <br>
+  <div class="question" id="question">
+    Сегодня важный день!<br>
     Готова получить заряд уверенности перед экзаменом?
   </div>
   <div class="buttons">
-    <button id="yes-btn">Да!</button>
+    <div class="yes-container" id="yes-container">
+      <button id="yes-btn">ДА!</button>
+    </div>
     <button id="no-btn">Нет</button>
   </div>
   <script>
     const yesBtn = document.getElementById('yes-btn');
+    const yesContainer = document.getElementById('yes-container');
     const noBtn = document.getElementById('no-btn');
+    const question = document.getElementById('question');
     let yesCount = 0;
 
-    // При нажатии на "Нет" — "Да" увеличивается, "Нет" меняет текст
     const noTexts = [
       "Нет",
       "Точно нет?",
@@ -84,39 +143,51 @@
       "Не обманывай, ты готова!",
       "Попробуй нажать Да!",
       "Ещё разок для уверенности!",
-      "Ну ладно, ща увеличим кнопку...",
+      "Жми на зелёную :)",
     ];
     const yesTexts = [
-      "Да!",
+      "ДА!",
       "ДА!!",
       "ДА!!!",
       "ДА!!!!",
       "ДА!!!!!",
       "ДА!!!!!!",
-      "ДА!!!!!!!!",
-      "Пора жать :)"
+      "ДА!!!!!!!!"
     ];
 
     noBtn.addEventListener('click', function(e) {
       e.preventDefault();
       yesCount++;
-      // Увеличиваем кнопку "Да"
-      let scale = 1 + yesCount * 0.3;
-      yesBtn.style.transform = `scale(${scale})`;
-      yesBtn.style.fontSize = `${2 + yesCount*0.5}em`;
+      // Увеличиваем контейнер, чтобы не выходил за экран
+      const vw = Math.min(window.innerWidth, 600);
+      const vh = Math.min(window.innerHeight, 350);
+      let width = 300 + yesCount*120;
+      let height = 110 + yesCount*60;
+      yesContainer.style.width = `${Math.min(width, window.innerWidth)}px`;
+      yesContainer.style.height = `${Math.min(height, window.innerHeight*0.6)}px`;
       yesBtn.innerText = yesTexts[Math.min(yesCount, yesTexts.length-1)];
+      yesBtn.style.fontSize = `${3 + yesCount*0.5}em`;
 
-      // Меняем текст "Нет"
       noBtn.innerText = noTexts[Math.min(yesCount, noTexts.length-1)];
-      if (yesCount > 7) {
-        noBtn.style.opacity = '0.5';
-        noBtn.innerText = 'Жми на зелёную!';
+      // Прячем кнопку "Нет" только когда контейнер полностью во весь экран
+      if (width >= window.innerWidth || height >= window.innerHeight*0.7 || yesCount >= 6) {
+        yesContainer.classList.add('fullscreen');
+        question.classList.add('hidden');
+        noBtn.classList.add('hidden');
+        yesBtn.innerText = "ДА!!!!!!!";
       }
     });
 
-    // При нажатии на "Да" — переход на страницу успеха (можешь заменить на свою)
-    yesBtn.addEventListener('click', function() {
-      window.location.href = "success.html";
+    yesBtn.addEventListener('click', function(e) {
+      // Если уже на финишном этапе — финальный текст
+      if (yesContainer.classList.contains('fullscreen')) {
+        yesBtn.innerText = "Ты готова на 100%!";
+        setTimeout(() => {
+          window.location.href = "success.html";
+        }, 1000);
+      } else {
+        // Можно добавить ещё реакцию если надо
+      }
     });
   </script>
 </body>

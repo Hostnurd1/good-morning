@@ -34,6 +34,9 @@
       cursor: pointer;
       transition: 0.2s;
       box-shadow: 0 4px 20px #4f8cff11;
+      position: relative;
+      z-index: 1;
+      user-select: none;
     }
     button:active {
       background: #2e5ec4;
@@ -53,11 +56,23 @@
   <script>
     const noBtn = document.getElementById('no-btn');
     let moveCount = 0;
-    noBtn.addEventListener('mouseenter', () => {
+    function moveBtn() {
       moveCount++;
       noBtn.style.transform = `translate(${(Math.random()-0.5)*300}px, ${(Math.random()-0.5)*120}px)`;
       if (moveCount > 4) noBtn.innerText = "Неа :)";
       if (moveCount > 7) noBtn.innerText = "Ну и ладно!";
+    }
+    // Для ПК — при наведении мышки
+    noBtn.addEventListener('mouseenter', moveBtn);
+    // Для мобильных — при каждом тапе
+    noBtn.addEventListener('touchstart', function(e) {
+      e.preventDefault();
+      moveBtn();
+    });
+    // Для ПК — чтобы и клик тоже двигал кнопку (по фану)
+    noBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      moveBtn();
     });
   </script>
 </body>

@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     html, body {
-      min-height: 100vh;
+      height: 100%;
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -21,8 +21,8 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      transition: background 0.7s;
       min-height: 100vh;
+      transition: background 0.6s;
     }
     @keyframes gradientBG {
       0% {background-position: 0% 50%;}
@@ -44,6 +44,7 @@
       font-weight: 700;
       letter-spacing: 1px;
       text-shadow: 0 2px 8px #fff8;
+      transition: 0.2s;
     }
     .main-question {
       font-size: 1.55rem;
@@ -52,6 +53,7 @@
       text-align: center;
       margin-bottom: 0.4rem;
       text-shadow: 0 2px 8px #fff8;
+      transition: 0.2s;
     }
     .motivation {
       font-size: 1.05rem;
@@ -61,6 +63,7 @@
       min-height: 1.6rem;
       text-align: center;
       max-width: 90vw;
+      transition: 0.15s;
     }
     .btns {
       display: flex;
@@ -80,9 +83,30 @@
       border-radius: 1.3rem;
       margin-bottom: 1.2rem;
       margin-top: 0.6rem;
-      transition: font-size 0.2s, padding 0.2s, width 0.2s, height 0.2s;
+      transition: font-size 0.28s cubic-bezier(.6,1.6,.3,1), 
+                  padding 0.28s cubic-bezier(.6,1.6,.3,1),
+                  border-radius 0.3s, width 0.25s, height 0.25s;
       cursor: pointer;
       box-shadow: 0 4px 16px #b3eabf61;
+      z-index: 2;
+      position: relative;
+      will-change: font-size, padding;
+      min-width: 180px;
+      min-height: 60px;
+    }
+    .yes-btn.fullscreen {
+      position: fixed !important;
+      left: 0 !important; top: 0 !important;
+      width: 100vw !important; height: 100vh !important;
+      margin: 0 !important;
+      border-radius: 0 !important;
+      font-size: 7vw !important;
+      padding: 0 !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 150;
+      transition: all 0.5s cubic-bezier(.6,1.6,.3,1);
     }
     .no-btn {
       background: linear-gradient(90deg, #ef473a 0%, #cb2d3e 100%);
@@ -99,27 +123,14 @@
       min-height: 40px;
       user-select: none;
       display: block;
+      position: static;
     }
     .hidden { display: none !important; }
-    .next-page {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .confetti {
       position: fixed;
       left: 0; top: 0; width: 100vw; height: 100vh;
-      background: linear-gradient(120deg, #a7e7b7 0%, #b3cfff 100%);
-      z-index: 200;
-      font-size: 2rem;
-      font-weight: 900;
-      color: #267c40;
-      letter-spacing: 1.5px;
-      text-align: center;
-      opacity: 0;
-      animation: fadeIn 0.7s forwards;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
+      pointer-events: none;
+      z-index: 999;
     }
     @media (max-width: 600px) {
       .goodmorning { font-size: 1.4rem; }
@@ -127,7 +138,6 @@
       .motivation { font-size: 0.89rem; }
       .yes-btn { font-size: 1.15rem; padding: 0.8rem 1.7rem; }
       .no-btn { font-size: 0.99rem; padding: 0.65rem 1.15rem; }
-      .next-page { font-size: 1.2rem; }
     }
   </style>
 </head>
@@ -141,7 +151,7 @@
       <button class="no-btn" id="noBtn">Нет</button>
     </div>
   </div>
-  <div class="next-page hidden" id="nextPageMsg">Продолжение скоро!<br>✦ Тут будет что-то интересное ✦</div>
+  <canvas class="confetti hidden" id="confetti"></canvas>
   <script>
     // Фразы для "нет"
     const noPhrases = [
@@ -155,7 +165,7 @@
       "Не бойся, всё получится!",
       "Жми «да»!"
     ];
-    // Мотивация (идёт под главным вопросом)
+    // Мотивация
     const supportPhrases = [
       "Ты умнее, чем думаешь.",
       "Всё получится, даже если волнуешься!",
@@ -177,54 +187,96 @@
     const gm = document.getElementById('gm');
     const mainQ = document.getElementById('mainQ');
     const motivation = document.getElementById('motivation');
-    const nextPageMsg = document.getElementById('nextPageMsg');
-    const mainContent = document.getElementById('main-content');
+    const confetti = document.getElementById('confetti');
 
-    // "нет" всегда остаётся ровно под "да", только увеличивает отступ вниз
+    // "нет" всегда ровно под "да", только сдвигается чуть вниз
     function setNoBtnPos() {
       noBtn.style.marginTop = (10 + noClicks * 18) + "px";
     }
 
-    // Обработка "нет"
+    // Увеличение "да"
+    function growYesBtn() {
+      yesLevel++;
+      yesBtn.textContent = "ДА" + "!".repeat(yesLevel);
+      yesBtn.style.fontSize = (1.7 + yesLevel*0.6) + "rem";
+      yesBtn.style.padding = (1.1 + yesLevel*0.22) + "rem " + (2.7 + yesLevel*0.42) + "rem";
+      setNoBtnPos();
+      // Когда уже ОЧЕНЬ много — делаем фулскрин
+      if (yesLevel >= 8) {
+        makeYesFullscreen();
+        finish();
+      }
+    }
+
     noBtn.onclick = () => {
       if (gameEnded) return;
       noClicks++;
       let newNo = noPhrases[Math.min(noClicks, noPhrases.length - 1)];
       noBtn.textContent = newNo;
-      // Меняем мотивацию, если есть
+      // Мотивация
       if (noClicks < supportPhrases.length) {
         motivation.textContent = supportPhrases[noClicks];
       }
-      // Растим "да"
-      yesLevel++;
-      yesBtn.textContent = "Да" + "!".repeat(yesLevel);
-      yesBtn.style.fontSize = (1.7 + yesLevel*0.25) + "rem";
-      yesBtn.style.padding = (1.1 + yesLevel*0.12) + "rem " + (2.7 + yesLevel*0.23) + "rem";
-      setNoBtnPos();
-      // Финал
-      if (yesLevel >= 7) finish();
+      growYesBtn();
     };
 
-    // "да" — если нажали, показываем заглушку-страницу
     yesBtn.onclick = () => {
       if (gameEnded) return;
-      gameEnded = true;
-      mainContent.classList.add('hidden');
-      nextPageMsg.classList.remove('hidden');
+      growYesBtn();
     };
 
-    function finish() {
-      gameEnded = true;
-      yesBtn.style.position = "fixed";
-      yesBtn.style.left = "50%";
-      yesBtn.style.top = "50%";
-      yesBtn.style.transform = "translate(-50%, -50%)";
-      yesBtn.style.fontSize = "clamp(3rem, 15vw, 8rem)";
-      yesBtn.style.padding = "3vw 13vw";
-      yesBtn.textContent = "ДА" + "!".repeat(yesLevel + 1);
+    function makeYesFullscreen() {
+      // Прячем всё
+      gm.classList.add('hidden');
       mainQ.classList.add('hidden');
       motivation.classList.add('hidden');
       noBtn.classList.add('hidden');
+      yesBtn.classList.add('fullscreen');
+      yesBtn.textContent = "ДА" + "!".repeat(yesLevel + 2);
+    }
+
+    function finish() {
+      gameEnded = true;
+      document.body.style.background = "linear-gradient(90deg, #38ef7d 0%, #11998e 100%)";
+      showConfetti();
+    }
+
+    // Конфетти-анимация
+    function showConfetti() {
+      confetti.width = window.innerWidth;
+      confetti.height = window.innerHeight;
+      confetti.classList.remove('hidden');
+      const ctx = confetti.getContext('2d');
+      const pieces = [];
+      for (let i = 0; i < 140; i++) {
+        pieces.push({
+          x: Math.random() * confetti.width,
+          y: Math.random() * -confetti.height,
+          w: Math.random() * 7 + 7,
+          h: Math.random() * 15 + 12,
+          color: `hsl(${Math.floor(Math.random()*360)},88%,57%)`,
+          speed: Math.random() * 4 + 2,
+          angle: Math.random() * Math.PI * 2,
+          spin: Math.random() * 0.1 + 0.01
+        });
+      }
+      let frame = 0;
+      function draw() {
+        ctx.clearRect(0,0,confetti.width,confetti.height);
+        for (let p of pieces) {
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.angle + frame * p.spin);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+          ctx.restore();
+          p.y += p.speed;
+          if (p.y > confetti.height + 20) p.y = -30;
+        }
+        frame++;
+        requestAnimationFrame(draw);
+      }
+      draw();
     }
 
     // Стартовая позиция "нет"

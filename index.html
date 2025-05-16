@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Доброе утро, Алёна!</title>
+  <title>Доброе утро!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     html, body {
@@ -12,15 +12,23 @@
       box-sizing: border-box;
     }
     body {
-      height: 100vh;
+      min-height: 100vh;
       width: 100vw;
-      background: linear-gradient(120deg, #f2a6b1 0%, #eec6cb 100%);
+      /* красивый плавный анимированный фон */
+      background: linear-gradient(-45deg, #ffecd2, #fcb69f, #a1c4fd, #c2e9fb);
+      background-size: 400% 400%;
+      animation: gradientBG 9s ease-in-out infinite;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      transition: background 0.6s;
+      transition: background 0.7s;
+    }
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
     }
     .container {
       display: flex;
@@ -29,32 +37,35 @@
       width: 100vw;
       z-index: 1;
       position: relative;
+      margin-top: 5vh;
     }
     .goodmorning {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
+      font-size: 2.6rem;
+      margin-bottom: 1.2rem;
       color: #fff;
-      text-shadow: 0 2px 6px #d18092b7;
+      text-shadow: 0 2px 6px #8db3ee82;
       font-weight: 700;
-    }
-    .question {
-      font-size: 1.6rem;
-      margin-bottom: 1.5rem;
-      font-weight: 600;
-      color: #9c2a3b;
-      text-align: center;
-      max-width: 95vw;
-      min-height: 3.2rem;
+      letter-spacing: 1px;
       transition: 0.2s;
     }
-    .valentine {
-      font-size: 2.4rem;
-      color: #ad415d;
-      font-family: 'Georgia', serif;
-      margin-bottom: 2.2rem;
-      font-style: italic;
-      font-weight: bold;
-      text-shadow: 0 2px 6px #fff8;
+    .main-question {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #36417e;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      transition: 0.2s;
+      text-shadow: 0 2px 8px #fff8;
+    }
+    .motivation {
+      font-size: 1.15rem;
+      color: #36417ea9;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      min-height: 1.6rem;
+      text-align: center;
+      transition: 0.15s;
+      max-width: 90vw;
     }
     .btns {
       display: flex;
@@ -62,37 +73,37 @@
       align-items: center;
       width: 100vw;
       position: relative;
-      min-height: 6rem;
+      min-height: 8rem;
     }
     .yes-btn {
-      background: #27c54f;
+      background: linear-gradient(90deg, #00b09b 0%, #96c93d 100%);
       color: #fff;
       font-size: 1.7rem;
       font-weight: bold;
       padding: 1.1rem 2.7rem;
       border: none;
-      border-radius: 1.2rem;
+      border-radius: 1.3rem;
       margin-bottom: 1.2rem;
-      transition: font-size 0.18s, padding 0.18s, width 0.2s, height 0.2s;
+      margin-top: 0.6rem;
+      transition: font-size 0.2s, padding 0.2s, width 0.2s, height 0.2s;
       cursor: pointer;
       z-index: 2;
       position: relative;
-      box-shadow: 0 2px 10px #b3eabf77;
+      box-shadow: 0 4px 16px #b3eabf61;
     }
     .no-btn {
-      background: #bb2323;
+      background: linear-gradient(90deg, #ef473a 0%, #cb2d3e 100%);
       color: #fff;
-      font-size: 1.1rem;
+      font-size: 1.12rem;
       font-weight: bold;
-      padding: 0.8rem 1.7rem;
+      padding: 0.7rem 2rem;
       border: none;
       border-radius: 1.2rem;
-      margin-top: 0.5rem;
       position: absolute;
       left: 50%;
-      top: 65%;
+      top: calc(100% + 10px);
       transform: translate(-50%, 0);
-      transition: left 0.5s, top 0.5s, font-size 0.12s, padding 0.12s;
+      transition: left 0.4s, top 0.4s, font-size 0.12s, padding 0.12s;
       cursor: pointer;
       z-index: 5;
       min-width: 95px;
@@ -110,19 +121,19 @@
     }
     @media (max-width: 600px) {
       .goodmorning { font-size: 2rem; }
-      .question { font-size: 1.1rem; }
-      .valentine { font-size: 1.4rem; }
-      .yes-btn { font-size: 1.3rem; padding: 0.8rem 1.5rem; }
-      .no-btn { font-size: 1rem; padding: 0.7rem 1.1rem; }
+      .main-question { font-size: 1.3rem; }
+      .motivation { font-size: 0.97rem; }
+      .yes-btn { font-size: 1.19rem; padding: 0.88rem 1.7rem; }
+      .no-btn { font-size: 1rem; padding: 0.68rem 1.2rem; }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="goodmorning" id="gm">Доброе утро!</div>
-    <div class="question" id="question">Ты готова? Ты всё сможешь!</div>
-    <div class="valentine">Will be my <span style="color:#e94271;">Valentine?</span></div>
-    <div class="btns">
+    <div class="main-question" id="mainQ">Ты готова? Ты всё сможешь!</div>
+    <div class="motivation" id="motivation">&nbsp;</div>
+    <div class="btns" style="position:relative;min-height:7rem;">
       <button class="yes-btn" id="yesBtn">Да!</button>
       <button class="no-btn" id="noBtn">Нет</button>
     </div>
@@ -132,102 +143,115 @@
     // Фразы для "нет"
     const noPhrases = [
       "Нет",
-      "Точно нет?",
-      "Может, всё-таки да?",
       "Ты уверена?",
-      "А если попробовать?",
-      "Ну давай, рискни!",
-      "Ты справишься!",
-      "Давай уже жми «да»!",
-      "Последний шанс сказать да!"
+      "Может, всё-таки да?",
+      "Ну же, рискни!",
+      "Справишься же!",
+      "Ты сможешь!",
+      "Последний шанс!",
+      "Не бойся, всё получится!",
+      "Жми «да»!"
     ];
-    // Поддерживающие фразы (будет меняться под кнопками)
+    // Мотивация (идёт под главным вопросом)
     const supportPhrases = [
-      "Ты сильная, у тебя всё получится!",
-      "Ты сегодня удивишь экзаменатора!",
-      "Ты знаешь больше, чем думаешь.",
-      "Поверить в себя — твоя суперсила.",
-      "Я уверен(а) в тебе!",
-      "Ты справишься с этим на раз-два!",
-      "Просто будь собой — и всё получится!",
-      "Экзамен? Пфф, это не страшно для тебя!",
-      "Пора показать всем, кто тут звезда!"
+      "Ты умнее, чем думаешь.",
+      "Всё получится, даже если волнуешься!",
+      "Верь в себя, это главное.",
+      "Ты сильнее, чем ты думаешь.",
+      "Просто сделай шаг вперёд.",
+      "У тебя уже всё есть для победы.",
+      "Экзамен не страшен, если ты уверена!",
+      "Сегодня твой день!",
+      "Действуй — и всё получится!",
+      "Ты удивишь всех, в том числе и себя."
     ];
 
     let noClicks = 0;
     let yesLevel = 1;
+    let gameEnded = false;
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
     const gm = document.getElementById('gm');
-    const question = document.getElementById('question');
+    const mainQ = document.getElementById('mainQ');
+    const motivation = document.getElementById('motivation');
     const confetti = document.getElementById('confetti');
 
-    function getRandomInt(min, max) {
-      return Math.floor(Math.random() * (max - min)) + min;
+    // Кнопка "нет" появляется ровно под "да" при старте
+    function setNoBtnStart() {
+      const yesRect = yesBtn.getBoundingClientRect();
+      const btnsRect = yesBtn.parentElement.getBoundingClientRect();
+      // Смещение по центру
+      noBtn.style.left = '50%';
+      noBtn.style.top = (yesBtn.offsetTop + yesBtn.offsetHeight + 12) + 'px';
+      noBtn.style.transform = 'translate(-50%, 0)';
     }
 
-    // Перемещение кнопки "нет" по экрану
+    // Движение "нет" по экрану — не пересекается с "да"
     function moveNoBtn() {
-      const btnsRect = document.querySelector('.btns').getBoundingClientRect();
+      const btnsRect = yesBtn.parentElement.getBoundingClientRect();
       const noRect = noBtn.getBoundingClientRect();
-      const padding = 10;
-      const maxLeft = window.innerWidth - noRect.width - padding;
-      const maxTop = window.innerHeight - noRect.height - padding - 60;
+      const yesRect = yesBtn.getBoundingClientRect();
+      const minLeft = 0, maxLeft = window.innerWidth - noRect.width;
+      const minTop = btnsRect.top, maxTop = window.innerHeight - noRect.height - 32;
       let left, top;
-      // Не даём "нет" перекрыться с "да"
       let attempts = 0;
       do {
-        left = getRandomInt(padding, maxLeft);
-        top = getRandomInt(140, maxTop);
+        left = Math.random() * (maxLeft - minLeft) + minLeft;
+        top = Math.random() * (maxTop - minTop) + minTop;
         attempts++;
       } while (
-        Math.abs(left - yesBtn.offsetLeft) < yesBtn.offsetWidth + 10 &&
-        Math.abs(top - yesBtn.offsetTop) < yesBtn.offsetHeight + 10 &&
+        Math.abs(left - yesRect.left) < yesRect.width + 10 &&
+        Math.abs(top - yesRect.top) < yesRect.height + 20 &&
         attempts < 10
       );
       noBtn.style.left = left + "px";
       noBtn.style.top = top + "px";
+      noBtn.style.transform = "none";
     }
 
-    // Обработка нажатия "нет"
+    // Обработка "нет"
     noBtn.onclick = () => {
+      if (gameEnded) return;
       noClicks++;
-      // Меняем фразу
-      let newNo = noPhrases[Math.min(noClicks, noPhrases.length-1)];
+      let newNo = noPhrases[Math.min(noClicks, noPhrases.length - 1)];
       noBtn.textContent = newNo;
-      // Перемещаем кнопку
-      moveNoBtn();
+      if (noClicks === 1) {
+        // Прячем "Доброе утро!" только после первого нажатия
+        gm.classList.add('hidden');
+      }
+      // Меняем мотивацию, если есть
+      if (noClicks <= supportPhrases.length) {
+        motivation.textContent = supportPhrases[noClicks - 1] || '';
+      }
       // Растим "да"
       yesLevel++;
       yesBtn.textContent = "Да" + "!".repeat(yesLevel);
-      yesBtn.style.fontSize = (1.7 + yesLevel*0.3) + "rem";
-      yesBtn.style.padding = (1.1 + yesLevel*0.15) + "rem " + (2.7 + yesLevel*0.3) + "rem";
-      // Скрываем "Доброе утро!" после первого клика
-      if (gm && !gm.classList.contains('hidden')) gm.classList.add('hidden');
-      // Меняем поддерживающий текст иногда
-      if (noClicks < supportPhrases.length) {
-        question.textContent = supportPhrases[noClicks];
-      }
-      // В конце — делаем "да" огромным и запускаем финал
-      if (yesLevel >= 6) {
-        finish();
-      }
+      yesBtn.style.fontSize = (1.7 + yesLevel*0.25) + "rem";
+      yesBtn.style.padding = (1.1 + yesLevel*0.12) + "rem " + (2.7 + yesLevel*0.23) + "rem";
+      // Двигаем "нет" только после первого нажатия
+      if (noClicks > 0) moveNoBtn();
+      // Финал
+      if (yesLevel >= 7) finish();
     };
 
-    // Обработка нажатия "да"
+    // "да" — если сразу нажали, редирект на след. страницу
     yesBtn.onclick = () => {
+      if (gameEnded) return;
+      if (yesLevel === 1) {
+        window.location.href = "#next-page"; // пока так, ты потом подставишь свою страницу
+        return;
+      }
       yesLevel++;
       yesBtn.textContent = "Да" + "!".repeat(yesLevel);
-      yesBtn.style.fontSize = (1.7 + yesLevel*0.3) + "rem";
-      yesBtn.style.padding = (1.1 + yesLevel*0.15) + "rem " + (2.7 + yesLevel*0.3) + "rem";
-      if (gm && !gm.classList.contains('hidden')) gm.classList.add('hidden');
-      if (yesLevel >= 6) {
-        finish();
-      }
+      yesBtn.style.fontSize = (1.7 + yesLevel*0.25) + "rem";
+      yesBtn.style.padding = (1.1 + yesLevel*0.12) + "rem " + (2.7 + yesLevel*0.23) + "rem";
+      if (!gm.classList.contains('hidden')) gm.classList.add('hidden');
+      if (yesLevel >= 7) finish();
     };
 
     function finish() {
-      document.body.style.background = "#27c54f";
+      gameEnded = true;
+      document.body.style.background = "linear-gradient(90deg, #38ef7d 0%, #11998e 100%)";
       yesBtn.style.position = "fixed";
       yesBtn.style.left = "50%";
       yesBtn.style.top = "50%";
@@ -235,26 +259,26 @@
       yesBtn.style.fontSize = "clamp(3rem, 15vw, 8rem)";
       yesBtn.style.padding = "3vw 13vw";
       yesBtn.textContent = "ДА" + "!".repeat(yesLevel + 1);
-      question.classList.add('hidden');
+      mainQ.classList.add('hidden');
+      motivation.classList.add('hidden');
       noBtn.classList.add('hidden');
-      document.querySelector('.valentine').classList.add('hidden');
       showConfetti();
     }
 
-    // Простая конфетти-анимация
+    // Конфетти-анимация
     function showConfetti() {
       confetti.width = window.innerWidth;
       confetti.height = window.innerHeight;
       confetti.classList.remove('hidden');
       const ctx = confetti.getContext('2d');
       const pieces = [];
-      for (let i = 0; i < 160; i++) {
+      for (let i = 0; i < 140; i++) {
         pieces.push({
           x: Math.random() * confetti.width,
           y: Math.random() * -confetti.height,
-          w: getRandomInt(6, 12),
-          h: getRandomInt(14, 22),
-          color: `hsl(${getRandomInt(0,360)}, 88%, 58%)`,
+          w: Math.random() * 7 + 7,
+          h: Math.random() * 15 + 12,
+          color: `hsl(${Math.floor(Math.random()*360)},88%,57%)`,
           speed: Math.random() * 4 + 2,
           angle: Math.random() * Math.PI * 2,
           spin: Math.random() * 0.1 + 0.01
@@ -278,9 +302,10 @@
       }
       draw();
     }
+
     // Начальное позиционирование "нет"
-    window.onload = () => moveNoBtn();
-    window.onresize = () => moveNoBtn();
+    window.onload = () => setNoBtnStart();
+    window.onresize = () => { if (!gameEnded) setNoBtnStart(); };
   </script>
 </body>
 </html>

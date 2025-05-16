@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Доброе утро!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #f6fafd;
+    }
+    .question {
+      margin-top: 40px;
+      font-size: 1.3em;
+      font-weight: 600;
+    }
+    .buttons {
+      margin-top: 24px;
+      display: flex;
+      gap: 20px;
+    }
+    button {
+      padding: 12px 24px;
+      font-size: 1em;
+      border: none;
+      border-radius: 12px;
+      background: #4f8cff;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 4px 20px #4f8cff11;
+    }
+    button:active {
+      background: #2e5ec4;
+    }
+    #no-btn {
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <h1>Доброе утро!</h1>
+  <div class="question">Давай проверим твое состояние:</div>
+  <div class="buttons">
+    <button onclick="alert('Круто! Хорошего дня!')">Да</button>
+    <button id="no-btn">Нет</button>
+  </div>
+  <script>
+    const noBtn = document.getElementById('no-btn');
+    let moveCount = 0;
+    noBtn.addEventListener('mouseenter', () => {
+      moveCount++;
+      noBtn.style.transform = `translate(${(Math.random()-0.5)*300}px, ${(Math.random()-0.5)*120}px)`;
+      if (moveCount > 4) noBtn.innerText = "Неа :)";
+      if (moveCount > 7) noBtn.innerText = "Ну и ладно!";
+    });
+  </script>
+</body>
+</html>

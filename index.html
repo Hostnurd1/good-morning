@@ -6,14 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     html, body {
-      height: 100%;
+      min-height: 100vh;
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      width: 100vw;
     }
     body {
-      min-height: 100vh;
-      width: 100vw;
       background: linear-gradient(135deg, #c0e0fc 0%, #f6d2e0 100%);
       background-size: 400% 400%;
       animation: gradientBG 8s ease-in-out infinite;
@@ -23,6 +22,7 @@
       justify-content: center;
       overflow: hidden;
       transition: background 0.7s;
+      min-height: 100vh;
     }
     @keyframes gradientBG {
       0% {background-position: 0% 50%;}
@@ -34,7 +34,6 @@
       flex-direction: column;
       align-items: center;
       width: 100vw;
-      z-index: 1;
       position: relative;
       margin-top: 5vh;
     }
@@ -44,7 +43,6 @@
       color: #3b3b70;
       font-weight: 700;
       letter-spacing: 1px;
-      transition: 0.2s;
       text-shadow: 0 2px 8px #fff8;
     }
     .main-question {
@@ -53,7 +51,6 @@
       color: #36417e;
       text-align: center;
       margin-bottom: 0.4rem;
-      transition: 0.2s;
       text-shadow: 0 2px 8px #fff8;
     }
     .motivation {
@@ -63,7 +60,6 @@
       font-weight: 600;
       min-height: 1.6rem;
       text-align: center;
-      transition: 0.15s;
       max-width: 90vw;
     }
     .btns {
@@ -71,8 +67,8 @@
       flex-direction: column;
       align-items: center;
       width: 100vw;
-      position: relative;
       min-height: 8rem;
+      position: relative;
     }
     .yes-btn {
       background: linear-gradient(90deg, #00b09b 0%, #96c93d 100%);
@@ -86,8 +82,6 @@
       margin-top: 0.6rem;
       transition: font-size 0.2s, padding 0.2s, width 0.2s, height 0.2s;
       cursor: pointer;
-      z-index: 2;
-      position: relative;
       box-shadow: 0 4px 16px #b3eabf61;
     }
     .no-btn {
@@ -98,22 +92,13 @@
       padding: 0.7rem 2rem;
       border: none;
       border-radius: 1.2rem;
-      position: absolute;
-      left: 50%;
-      top: calc(100% + 10px);
-      transform: translate(-50%, 0);
-      transition: left 0.4s, top 0.4s, font-size 0.12s, padding 0.12s;
+      margin-top: 10px;
+      transition: font-size 0.12s, padding 0.12s, margin-top 0.3s;
       cursor: pointer;
-      z-index: 5;
       min-width: 95px;
       min-height: 40px;
       user-select: none;
-    }
-    .confetti {
-      position: fixed;
-      left: 0; top: 0; width: 100vw; height: 100vh;
-      pointer-events: none;
-      z-index: 100;
+      display: block;
     }
     .hidden { display: none !important; }
     .next-page {
@@ -151,12 +136,11 @@
     <div class="goodmorning" id="gm">Доброе утро, Алёна!</div>
     <div class="main-question" id="mainQ">Ты готова? Ты всё сможешь!</div>
     <div class="motivation" id="motivation">Ты умнее, чем думаешь.</div>
-    <div class="btns" style="position:relative;min-height:7rem;">
+    <div class="btns">
       <button class="yes-btn" id="yesBtn">Да!</button>
       <button class="no-btn" id="noBtn">Нет</button>
     </div>
   </div>
-  <canvas class="confetti hidden" id="confetti"></canvas>
   <div class="next-page hidden" id="nextPageMsg">Продолжение скоро!<br>✦ Тут будет что-то интересное ✦</div>
   <script>
     // Фразы для "нет"
@@ -193,44 +177,12 @@
     const gm = document.getElementById('gm');
     const mainQ = document.getElementById('mainQ');
     const motivation = document.getElementById('motivation');
-    const confetti = document.getElementById('confetti');
     const nextPageMsg = document.getElementById('nextPageMsg');
     const mainContent = document.getElementById('main-content');
 
-    // Кнопка "нет" появляется ровно под "да" при старте
-    function setNoBtnStart() {
-      const yesRect = yesBtn.getBoundingClientRect();
-      noBtn.style.left = '50%';
-      noBtn.style.top = (yesBtn.offsetTop + yesBtn.offsetHeight + 16) + 'px';
-      noBtn.style.transform = 'translate(-50%, 0)';
-    }
-
-    // Движение "нет" по экрану — не пересекается с "да", но не далеко уходит
-    function moveNoBtn() {
-      const btnsRect = yesBtn.parentElement.getBoundingClientRect();
-      const yesRect = yesBtn.getBoundingClientRect();
-      const noRect = noBtn.getBoundingClientRect();
-      // Диапазон — только вокруг центра (чтобы не уехало к краям)
-      const spread = Math.min(window.innerWidth, 320);
-      const centerX = window.innerWidth / 2 - noRect.width / 2;
-      const centerY = yesRect.bottom + 16;
-      let left, top;
-      let attempts = 0;
-      do {
-        left = centerX + (Math.random() - 0.5) * spread;
-        top = centerY + (Math.random() - 0.5) * 80;
-        attempts++;
-      } while (
-        Math.abs(left - yesRect.left) < yesRect.width + 12 &&
-        Math.abs(top - yesRect.bottom) < 45 &&
-        attempts < 10
-      );
-      // Ограничиваем по экрану
-      left = Math.max(10, Math.min(left, window.innerWidth - noRect.width - 10));
-      top = Math.max(centerY, Math.min(top, window.innerHeight - noRect.height - 30));
-      noBtn.style.left = left + "px";
-      noBtn.style.top = top + "px";
-      noBtn.style.transform = "none";
+    // "нет" всегда остаётся ровно под "да", только увеличивает отступ вниз
+    function setNoBtnPos() {
+      noBtn.style.marginTop = (10 + noClicks * 18) + "px";
     }
 
     // Обработка "нет"
@@ -248,9 +200,8 @@
       yesBtn.textContent = "Да" + "!".repeat(yesLevel);
       yesBtn.style.fontSize = (1.7 + yesLevel*0.25) + "rem";
       yesBtn.style.padding = (1.1 + yesLevel*0.12) + "rem " + (2.7 + yesLevel*0.23) + "rem";
-      // Двигаем "нет" только после первого нажатия
-      if (noClicks > 0) moveNoBtn();
-      // Финал — большое "да" и конфетти
+      setNoBtnPos();
+      // Финал
       if (yesLevel >= 7) finish();
     };
 
@@ -260,13 +211,10 @@
       gameEnded = true;
       mainContent.classList.add('hidden');
       nextPageMsg.classList.remove('hidden');
-      // Можно добавить setTimeout и перейти куда надо, когда ты придумаешь
-      // setTimeout(() => window.location.href = "твой-url.html", 2000);
     };
 
     function finish() {
       gameEnded = true;
-      document.body.style.background = "linear-gradient(90deg, #38ef7d 0%, #11998e 100%)";
       yesBtn.style.position = "fixed";
       yesBtn.style.left = "50%";
       yesBtn.style.top = "50%";
@@ -277,50 +225,11 @@
       mainQ.classList.add('hidden');
       motivation.classList.add('hidden');
       noBtn.classList.add('hidden');
-      showConfetti();
     }
 
-    // Конфетти-анимация
-    function showConfetti() {
-      confetti.width = window.innerWidth;
-      confetti.height = window.innerHeight;
-      confetti.classList.remove('hidden');
-      const ctx = confetti.getContext('2d');
-      const pieces = [];
-      for (let i = 0; i < 140; i++) {
-        pieces.push({
-          x: Math.random() * confetti.width,
-          y: Math.random() * -confetti.height,
-          w: Math.random() * 7 + 7,
-          h: Math.random() * 15 + 12,
-          color: `hsl(${Math.floor(Math.random()*360)},88%,57%)`,
-          speed: Math.random() * 4 + 2,
-          angle: Math.random() * Math.PI * 2,
-          spin: Math.random() * 0.1 + 0.01
-        });
-      }
-      let frame = 0;
-      function draw() {
-        ctx.clearRect(0,0,confetti.width,confetti.height);
-        for (let p of pieces) {
-          ctx.save();
-          ctx.translate(p.x, p.y);
-          ctx.rotate(p.angle + frame * p.spin);
-          ctx.fillStyle = p.color;
-          ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
-          ctx.restore();
-          p.y += p.speed;
-          if (p.y > confetti.height + 20) p.y = -30;
-        }
-        frame++;
-        requestAnimationFrame(draw);
-      }
-      draw();
-    }
-
-    // Начальное позиционирование "нет"
-    window.onload = () => setNoBtnStart();
-    window.onresize = () => { if (!gameEnded) setNoBtnStart(); };
+    // Стартовая позиция "нет"
+    window.onload = () => setNoBtnPos();
+    window.onresize = () => { if (!gameEnded) setNoBtnPos(); };
   </script>
 </body>
 </html>

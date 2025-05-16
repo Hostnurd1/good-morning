@@ -56,7 +56,7 @@
       width: 260px; height: 90px;
       background: #36b545;
       border-radius: 32px;
-      transition: width 0.25s cubic-bezier(.39,.58,.57,1.27), height 0.25s cubic-bezier(.39,.58,.57,1.27), border-radius 0.3s;
+      transition: width 0.25s cubic-bezier(.39,.58,.57,1.27), height 0.25s cubic-bezier(.39,.58,.57,1.27), border-radius 0.3s, left 0.25s, top 0.25s;
       z-index: 2;
       box-shadow: 0 6px 32px #36b5451b;
       margin-bottom: 12px;
@@ -98,7 +98,6 @@
       #yes-btn { font-size: 1.1em;}
       #no-btn { font-size: 1em; }
     }
-    /* Только в самом конце — фиксируем и растягиваем */
     .fullscreen-yes {
       position: fixed !important;
       left: 0 !important; top: 0 !important;
@@ -111,33 +110,42 @@
       justify-content: center;
       box-shadow: none !important;
       transition: all 0.4s cubic-bezier(.39,.58,.57,1.27);
+      pointer-events: all;
     }
     .hidden {
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.2s;
     }
+    /* Текст под слоем зелёной "ДА" */
+    .overlayed {
+      position: relative;
+      z-index: 1;
+    }
+    .overlay-on {
+      z-index: 10 !important;
+    }
   </style>
 </head>
 <body>
-  <div class="good-morning" id="gm">Доброе утро, Алёна!</div>
-  <div class="wish" id="wish">
+  <div class="good-morning overlayed" id="gm">Доброе утро, Алёна!</div>
+  <div class="wish overlayed" id="wish">
     Пусть этот день начнётся с улыбки.<br>
     Я верю, что у тебя всё получится — ты сильная, умная и красивая!
   </div>
-  <div class="question" id="question">
+  <div class="question overlayed" id="question">
     <b>Сегодня важный день!</b><br>
     А теперь — готова получить<br>
     заряд уверенности перед экзаменом?<br>
     (Если вдруг сомневаешься — просто жми на "Да"!<br>А если сильно сомневаешься — попробуй нажать "Нет" пару раз...)
   </div>
-  <div class="buttons" id="buttons">
+  <div class="buttons overlayed" id="buttons">
     <div class="yes-container" id="yes-container">
       <button id="yes-btn">ДА!</button>
     </div>
     <button id="no-btn">Нет</button>
   </div>
-  <div class="egg" id="egg">🐣 Не жми сюда!</div>
+  <div class="egg overlayed" id="egg">🐣 Не жми сюда!</div>
   <script>
     const yesBtn = document.getElementById('yes-btn');
     const yesContainer = document.getElementById('yes-container');
@@ -174,8 +182,11 @@
       "ДА!!!!!!!"
     ];
 
+    let fullscreenStage = false;
+
     noBtn.addEventListener('click', function(e) {
       e.preventDefault();
+      if (fullscreenStage) return; // Не даём повторно увеличивать
       yesCount++;
       const steps = 8;
       const minWidth = Math.min(window.innerWidth * 0.55, 320);
@@ -183,7 +194,6 @@
       const minHeight = Math.min(window.innerHeight * 0.14, 110);
       const maxHeight = window.innerHeight * 0.7;
 
-      // До последних двух нажатий — обычный рост
       let width, height;
       if (yesCount < steps - 1) {
         width = minWidth + (maxWidth - minWidth) * yesCount / steps;
@@ -197,23 +207,32 @@
 
       noBtn.innerText = noTexts[Math.min(yesCount, noTexts.length-1)];
 
-      // При предпоследнем нажатии — скрываем текст, оставляем кнопки
+      // На предпоследнем нажатии — оставляем всё, но готовим перекрытие
       if (yesCount === steps - 2) {
-        gm.classList.add('hidden');
-        wish.classList.add('hidden');
-        question.classList.add('hidden');
-        egg.classList.add('hidden');
+        // ничего не скрываем, просто ждем последнего шага
       }
-      // На самом последнем нажатии — растягиваем "ДА" на весь экран (position:fixed)
+      // На самом последнем нажатии — fullscreen-эффект, реально перекрываем всё
       if (yesCount >= steps - 1) {
+        fullscreenStage = true;
         yesContainer.classList.add('fullscreen-yes');
-        buttons.classList.add('hidden');
+        yesContainer.style.width = "100vw";
+        yesContainer.style.height = "100vh";
         yesBtn.innerText = "ДА!!!!!!!";
+        yesBtn.style.fontSize = "9vw";
+        // Поднимаем зелёную наверх, но текст остаётся под ней
+        gm.classList.add('overlayed');
+        wish.classList.add('overlayed');
+        question.classList.add('overlayed');
+        buttons.classList.add('overlayed');
+        egg.classList.add('overlayed');
+        yesContainer.classList.add('overlay-on');
+        // Кнопку "Нет" убираем, она больше не видна
+        noBtn.classList.add('hidden');
       }
     });
 
     yesBtn.addEventListener('click', function(e) {
-      if (yesContainer.classList.contains('fullscreen-yes')) {
+      if (fullscreenStage) {
         yesBtn.innerText = "Ты готова на 100%!";
         setTimeout(() => {
           window.location.href = "success.html";

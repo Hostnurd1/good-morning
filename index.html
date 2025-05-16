@@ -43,8 +43,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 300px;
-      height: 110px;
+      width: 260px;
+      height: 90px;
       background: #36b545;
       border-radius: 32px;
       transition: 
@@ -64,7 +64,7 @@
       background: transparent;
       border: none;
       color: #fff;
-      font-size: 3em;
+      font-size: 2.2em;
       font-weight: 900;
       width: 100%;
       height: 100%;
@@ -91,11 +91,10 @@
     }
     @media (max-width: 500px) {
       .question { font-size: 1.1em; }
-      .yes-container { width: 170px; height: 70px;}
-      #yes-btn { font-size: 2em;}
+      .yes-container { width: 130px; height: 50px;}
+      #yes-btn { font-size: 1.1em;}
       #no-btn { font-size: 1em; }
     }
-    /* Fullscreen green on finish */
     .fullscreen {
       width: 100vw !important;
       height: 100vh !important;
@@ -144,6 +143,7 @@
       "Попробуй нажать Да!",
       "Ещё разок для уверенности!",
       "Жми на зелёную :)",
+      "Пора принимать уверенность!"
     ];
     const yesTexts = [
       "ДА!",
@@ -152,25 +152,33 @@
       "ДА!!!!",
       "ДА!!!!!",
       "ДА!!!!!!",
-      "ДА!!!!!!!!"
+      "ДА!!!!!!!"
     ];
 
     noBtn.addEventListener('click', function(e) {
       e.preventDefault();
       yesCount++;
-      // Увеличиваем контейнер, чтобы не выходил за экран
-      const vw = Math.min(window.innerWidth, 600);
-      const vh = Math.min(window.innerHeight, 350);
-      let width = 300 + yesCount*120;
-      let height = 110 + yesCount*60;
-      yesContainer.style.width = `${Math.min(width, window.innerWidth)}px`;
-      yesContainer.style.height = `${Math.min(height, window.innerHeight*0.6)}px`;
+
+      // Медленный рост: шаги небольшие, чтобы до fullscreen нужно было 7-8 нажатий
+      const steps = 8; // на сколько нажатий растянуть
+      const minWidth = Math.min(window.innerWidth * 0.55, 320);
+      const maxWidth = window.innerWidth;
+      const minHeight = Math.min(window.innerHeight * 0.14, 110);
+      const maxHeight = window.innerHeight * 0.70;
+
+      // Шаг увеличения
+      let width = minWidth + (maxWidth - minWidth) * Math.min(yesCount, steps) / steps;
+      let height = minHeight + (maxHeight - minHeight) * Math.min(yesCount, steps) / steps;
+
+      yesContainer.style.width = `${width}px`;
+      yesContainer.style.height = `${height}px`;
+
       yesBtn.innerText = yesTexts[Math.min(yesCount, yesTexts.length-1)];
-      yesBtn.style.fontSize = `${3 + yesCount*0.5}em`;
+      yesBtn.style.fontSize = `${2.2 + yesCount*0.6}em`;
 
       noBtn.innerText = noTexts[Math.min(yesCount, noTexts.length-1)];
-      // Прячем кнопку "Нет" только когда контейнер полностью во весь экран
-      if (width >= window.innerWidth || height >= window.innerHeight*0.7 || yesCount >= 6) {
+      // Только после 7-8 нажатий "ДА" занимает весь экран, а остальные элементы исчезают
+      if (yesCount >= steps) {
         yesContainer.classList.add('fullscreen');
         question.classList.add('hidden');
         noBtn.classList.add('hidden');
@@ -179,14 +187,12 @@
     });
 
     yesBtn.addEventListener('click', function(e) {
-      // Если уже на финишном этапе — финальный текст
+      // Если уже на финишном этапе — финальный текст и редирект
       if (yesContainer.classList.contains('fullscreen')) {
         yesBtn.innerText = "Ты готова на 100%!";
         setTimeout(() => {
           window.location.href = "success.html";
-        }, 1000);
-      } else {
-        // Можно добавить ещё реакцию если надо
+        }, 1100);
       }
     });
   </script>

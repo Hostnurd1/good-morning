@@ -32,8 +32,6 @@
     .yes-btn.fullscreen { position: fixed !important; left: 0 !important; top: 0 !important; width: 100vw !important; height: 100vh !important; margin: 0 !important; border-radius: 0 !important; font-size: 7vw !important; padding: 0 !important; display: flex; align-items: center; justify-content: center; z-index: 150; transition: all 0.5s cubic-bezier(.6,1.6,.3,1);}
     .no-btn { background: linear-gradient(90deg, #ef473a 0%, #cb2d3e 100%); color: #fff; font-size: 1.1rem; font-weight: bold; padding: 0.7rem 2rem; border: none; border-radius: 1.2rem; margin-top: 10px; transition: font-size 0.12s, padding 0.12s, margin-top 0.3s; cursor: pointer; min-width: 95px; min-height: 40px; user-select: none; display: block; position: static; z-index: 5;}
     .confetti { position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 999; }
-    .next-page { display: flex; align-items: center; justify-content: center; position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; background: linear-gradient(120deg, #a7e7b7 0%, #b3cfff 100%); z-index: 200; font-size: 2rem; font-weight: 900; color: #267c40; letter-spacing: 1.5px; text-align: center; opacity: 0; animation: fadeIn 0.7s forwards; }
-    @keyframes fadeIn { from { opacity: 0; } to   { opacity: 1; } }
     @media (max-width: 600px) {
       .emoji { font-size: 1.45rem; height: 1.7rem; line-height: 1.7rem; margin-bottom: 0.3rem;}
       .goodmorning { font-size: 1.3rem; }
@@ -41,7 +39,6 @@
       .motivation { font-size: 0.92rem; }
       .yes-btn { font-size: 1.14rem; padding: 0.8rem 1.7rem; }
       .no-btn { font-size: 0.96rem; padding: 0.65rem 1.15rem; }
-      .next-page { font-size: 1.2rem; }
     }
   </style>
 </head>
@@ -57,9 +54,7 @@
     </div>
   </div>
   <canvas class="confetti hidden" id="confetti"></canvas>
-  <div class="next-page hidden" id="nextPageMsg">Продолжение скоро!<br>✦ Тут будет что-то интересное ✦</div>
   <script>
-    // --- ВСЕГДА сбрасываем состояние на старте!
     let noClicks = 0;
     let yesLevel = 1;
     let gameEnded = false;
@@ -97,7 +92,6 @@
     const motivation = document.getElementById('motivation');
     const emoji = document.getElementById('emoji');
     const confetti = document.getElementById('confetti');
-    const nextPageMsg = document.getElementById('nextPageMsg');
     const mainContent = document.getElementById('main-content');
 
     function setNoBtnPos() {
@@ -133,11 +127,6 @@
     };
 
     yesBtn.onclick = () => {
-      if (fullscreened && gameEnded) {
-        mainContent.classList.add('hidden');
-        nextPageMsg.classList.remove('hidden');
-        return;
-      }
       if (!gameEnded) {
         growYesBtn();
       }
@@ -198,15 +187,11 @@
       draw();
     }
 
-    // --- Сбросить ВСЁ состояние при старте!
     function resetAll() {
       noClicks = 0;
       yesLevel = 1;
       gameEnded = false;
       fullscreened = false;
-
-      mainContent.classList.remove('hidden');
-      nextPageMsg.classList.add('hidden');
 
       yesBtn.textContent = "Да!";
       yesBtn.classList.remove('fullscreen');
@@ -231,3 +216,4 @@
   </script>
 </body>
 </html>
+

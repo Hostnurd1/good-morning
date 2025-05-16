@@ -11,22 +11,25 @@
       padding: 0;
       box-sizing: border-box;
       width: 100vw;
+      min-height: 100vh;
     }
     body {
-      background: linear-gradient(135deg, #c0e0fc 0%, #f6d2e0 100%);
+      min-height: 100vh;
+      background: linear-gradient(270deg, #c0e0fc, #f6d2e0, #b2ffd6, #fde9b3, #f3b6ff, #b8e4ff);
       background-size: 400% 400%;
-      animation: gradientBG 8s ease-in-out infinite;
+      animation: gradientBG 15s ease-in-out infinite;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      min-height: 100vh;
       transition: background 0.6s;
     }
     @keyframes gradientBG {
       0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
+      25% {background-position: 100% 50%;}
+      50% {background-position: 100% 0%;}
+      75% {background-position: 0% 50%;}
       100% {background-position: 0% 50%;}
     }
     .container {
@@ -38,32 +41,38 @@
       margin-top: 5vh;
     }
     .goodmorning {
-      font-size: 2.2rem;
+      font-size: 2.3rem;
       margin-bottom: 1.1rem;
-      color: #3b3b70;
-      font-weight: 700;
+      color: #383862;
+      font-weight: 800;
       letter-spacing: 1px;
       text-shadow: 0 2px 8px #fff8;
       transition: 0.2s;
+      text-align: center;
     }
     .main-question {
-      font-size: 1.55rem;
+      font-size: 1.5rem;
       font-weight: 900;
       color: #36417e;
       text-align: center;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.5rem;
       text-shadow: 0 2px 8px #fff8;
       transition: 0.2s;
     }
     .motivation {
-      font-size: 1.05rem;
-      color: #36417eb0;
+      font-size: 1.2rem;
+      color: #fff;
+      background: linear-gradient(90deg, #8ee3f8, #ffd8e6 90%);
+      padding: 0.32em 1em;
+      border-radius: 1.2em;
       margin-bottom: 1.4rem;
-      font-weight: 600;
-      min-height: 1.6rem;
+      font-weight: 700;
+      min-height: 1.8rem;
       text-align: center;
+      transition: 0.18s;
       max-width: 90vw;
-      transition: 0.15s;
+      box-shadow: 0 2px 12px #d3e9fa65;
+      display: inline-block;
     }
     .btns {
       display: flex;
@@ -90,7 +99,6 @@
       box-shadow: 0 4px 16px #b3eabf61;
       z-index: 2;
       position: relative;
-      will-change: font-size, padding;
       min-width: 180px;
       min-height: 60px;
     }
@@ -111,7 +119,7 @@
     .no-btn {
       background: linear-gradient(90deg, #ef473a 0%, #cb2d3e 100%);
       color: #fff;
-      font-size: 1.08rem;
+      font-size: 1.1rem;
       font-weight: bold;
       padding: 0.7rem 2rem;
       border: none;
@@ -124,20 +132,52 @@
       user-select: none;
       display: block;
       position: static;
+      z-index: 5;
     }
-    .hidden { display: none !important; }
+    .emoji {
+      position: fixed;
+      top: 35px;
+      right: 24px;
+      font-size: 2.3rem;
+      z-index: 99;
+      pointer-events: none;
+      user-select: none;
+      transition: opacity 0.25s;
+    }
     .confetti {
       position: fixed;
       left: 0; top: 0; width: 100vw; height: 100vh;
       pointer-events: none;
       z-index: 999;
     }
+    .next-page {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      background: linear-gradient(120deg, #a7e7b7 0%, #b3cfff 100%);
+      z-index: 200;
+      font-size: 2rem;
+      font-weight: 900;
+      color: #267c40;
+      letter-spacing: 1.5px;
+      text-align: center;
+      opacity: 0;
+      animation: fadeIn 0.7s forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
     @media (max-width: 600px) {
-      .goodmorning { font-size: 1.4rem; }
-      .main-question { font-size: 1.1rem; }
-      .motivation { font-size: 0.89rem; }
-      .yes-btn { font-size: 1.15rem; padding: 0.8rem 1.7rem; }
-      .no-btn { font-size: 0.99rem; padding: 0.65rem 1.15rem; }
+      .goodmorning { font-size: 1.3rem; }
+      .main-question { font-size: 1.02rem; }
+      .motivation { font-size: 0.92rem; }
+      .yes-btn { font-size: 1.14rem; padding: 0.8rem 1.7rem; }
+      .no-btn { font-size: 0.96rem; padding: 0.65rem 1.15rem; }
+      .emoji { font-size: 1.55rem; top: 22px; right: 10px;}
+      .next-page { font-size: 1.2rem; }
     }
   </style>
 </head>
@@ -145,15 +185,16 @@
   <div class="container" id="main-content">
     <div class="goodmorning" id="gm">Доброе утро, Алёна!</div>
     <div class="main-question" id="mainQ">Ты готова? Ты всё сможешь!</div>
-    <div class="motivation" id="motivation">Ты умнее, чем думаешь.</div>
+    <div class="motivation" id="motivation">Всё получится, даже если волнуешься!</div>
     <div class="btns">
       <button class="yes-btn" id="yesBtn">Да!</button>
       <button class="no-btn" id="noBtn">Нет</button>
     </div>
+    <div class="emoji" id="emoji" style="opacity:0;"></div>
   </div>
   <canvas class="confetti hidden" id="confetti"></canvas>
+  <div class="next-page hidden" id="nextPageMsg">Продолжение скоро!<br>✦ Тут будет что-то интересное ✦</div>
   <script>
-    // Фразы для "нет"
     const noPhrases = [
       "Нет",
       "Ты уверена?",
@@ -165,10 +206,9 @@
       "Не бойся, всё получится!",
       "Жми «да»!"
     ];
-    // Мотивация
     const supportPhrases = [
-      "Ты умнее, чем думаешь.",
       "Всё получится, даже если волнуешься!",
+      "Ты умнее, чем думаешь.",
       "Верь в себя, это главное.",
       "Ты сильнее, чем ты думаешь.",
       "Просто сделай шаг вперёд.",
@@ -178,34 +218,41 @@
       "Действуй — и всё получится!",
       "Ты удивишь всех, в том числе и себя."
     ];
-
+    const emojis = ['🥲','☹️','😢','😔','😒','😑'];
     let noClicks = 0;
     let yesLevel = 1;
     let gameEnded = false;
+    let fullscreened = false;
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
     const gm = document.getElementById('gm');
     const mainQ = document.getElementById('mainQ');
     const motivation = document.getElementById('motivation');
+    const emoji = document.getElementById('emoji');
     const confetti = document.getElementById('confetti');
+    const nextPageMsg = document.getElementById('nextPageMsg');
+    const mainContent = document.getElementById('main-content');
 
-    // "нет" всегда ровно под "да", только сдвигается чуть вниз
     function setNoBtnPos() {
       noBtn.style.marginTop = (10 + noClicks * 18) + "px";
     }
 
-    // Увеличение "да"
     function growYesBtn() {
       yesLevel++;
       yesBtn.textContent = "ДА" + "!".repeat(yesLevel);
       yesBtn.style.fontSize = (1.7 + yesLevel*0.6) + "rem";
       yesBtn.style.padding = (1.1 + yesLevel*0.22) + "rem " + (2.7 + yesLevel*0.42) + "rem";
       setNoBtnPos();
-      // Когда уже ОЧЕНЬ много — делаем фулскрин
-      if (yesLevel >= 8) {
+      if (yesLevel >= 8 && !fullscreened) {
         makeYesFullscreen();
         finish();
       }
+    }
+
+    // Смайлик — появляется при первом нажатии на "нет", дальше меняется
+    function showEmoji() {
+      emoji.style.opacity = "1";
+      emoji.textContent = emojis[Math.min(noClicks-1, emojis.length-1)];
     }
 
     noBtn.onclick = () => {
@@ -214,23 +261,33 @@
       let newNo = noPhrases[Math.min(noClicks, noPhrases.length - 1)];
       noBtn.textContent = newNo;
       // Мотивация
-      if (noClicks < supportPhrases.length) {
-        motivation.textContent = supportPhrases[noClicks];
+      if (noClicks-1 < supportPhrases.length) {
+        motivation.textContent = supportPhrases[noClicks-1];
       }
       growYesBtn();
+      // Показываем или меняем смайлик
+      showEmoji();
     };
 
     yesBtn.onclick = () => {
-      if (gameEnded) return;
-      growYesBtn();
+      if (gameEnded && fullscreened) {
+        // Переброс на заглушку
+        mainContent.classList.add('hidden');
+        nextPageMsg.classList.remove('hidden');
+        return;
+      }
+      if (!gameEnded) {
+        growYesBtn();
+      }
     };
 
     function makeYesFullscreen() {
-      // Прячем всё
+      fullscreened = true;
       gm.classList.add('hidden');
       mainQ.classList.add('hidden');
       motivation.classList.add('hidden');
       noBtn.classList.add('hidden');
+      emoji.style.opacity = "0";
       yesBtn.classList.add('fullscreen');
       yesBtn.textContent = "ДА" + "!".repeat(yesLevel + 2);
     }
@@ -241,7 +298,6 @@
       showConfetti();
     }
 
-    // Конфетти-анимация
     function showConfetti() {
       confetti.width = window.innerWidth;
       confetti.height = window.innerHeight;

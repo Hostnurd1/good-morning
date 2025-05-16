@@ -40,6 +40,23 @@
       position: relative;
       margin-top: 5vh;
     }
+    .emoji {
+      position: relative;
+      display: block;
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 0.7rem;
+      height: 2.7rem;
+      line-height: 2.7rem;
+      transition: opacity 0.28s;
+      opacity: 0;
+      user-select: none;
+      pointer-events: none;
+      width: 100vw;
+    }
+    .emoji.visible {
+      opacity: 1;
+    }
     .goodmorning {
       font-size: 2.3rem;
       margin-bottom: 1.1rem;
@@ -134,16 +151,6 @@
       position: static;
       z-index: 5;
     }
-    .emoji {
-      position: fixed;
-      top: 35px;
-      right: 24px;
-      font-size: 2.3rem;
-      z-index: 99;
-      pointer-events: none;
-      user-select: none;
-      transition: opacity 0.25s;
-    }
     .confetti {
       position: fixed;
       left: 0; top: 0; width: 100vw; height: 100vh;
@@ -171,18 +178,19 @@
       to   { opacity: 1; }
     }
     @media (max-width: 600px) {
+      .emoji { font-size: 1.45rem; height: 1.7rem; line-height: 1.7rem; margin-bottom: 0.3rem;}
       .goodmorning { font-size: 1.3rem; }
       .main-question { font-size: 1.02rem; }
       .motivation { font-size: 0.92rem; }
       .yes-btn { font-size: 1.14rem; padding: 0.8rem 1.7rem; }
       .no-btn { font-size: 0.96rem; padding: 0.65rem 1.15rem; }
-      .emoji { font-size: 1.55rem; top: 22px; right: 10px;}
       .next-page { font-size: 1.2rem; }
     }
   </style>
 </head>
 <body>
   <div class="container" id="main-content">
+    <div class="emoji" id="emoji"></div>
     <div class="goodmorning" id="gm">Доброе утро, Алёна!</div>
     <div class="main-question" id="mainQ">Ты готова? Ты всё сможешь!</div>
     <div class="motivation" id="motivation">Всё получится, даже если волнуешься!</div>
@@ -190,7 +198,6 @@
       <button class="yes-btn" id="yesBtn">Да!</button>
       <button class="no-btn" id="noBtn">Нет</button>
     </div>
-    <div class="emoji" id="emoji" style="opacity:0;"></div>
   </div>
   <canvas class="confetti hidden" id="confetti"></canvas>
   <div class="next-page hidden" id="nextPageMsg">Продолжение скоро!<br>✦ Тут будет что-то интересное ✦</div>
@@ -251,7 +258,7 @@
 
     // Смайлик — появляется при первом нажатии на "нет", дальше меняется
     function showEmoji() {
-      emoji.style.opacity = "1";
+      emoji.classList.add("visible");
       emoji.textContent = emojis[Math.min(noClicks-1, emojis.length-1)];
     }
 
@@ -270,8 +277,8 @@
     };
 
     yesBtn.onclick = () => {
-      if (gameEnded && fullscreened) {
-        // Переброс на заглушку
+      // Только в самом финале (зелёный экран + ДА) — перекидываем на заглушку
+      if (fullscreened && gameEnded) {
         mainContent.classList.add('hidden');
         nextPageMsg.classList.remove('hidden');
         return;
@@ -287,7 +294,8 @@
       mainQ.classList.add('hidden');
       motivation.classList.add('hidden');
       noBtn.classList.add('hidden');
-      emoji.style.opacity = "0";
+      emoji.classList.remove("visible"); // Смайлик скрываем в финале
+      emoji.textContent = "";
       yesBtn.classList.add('fullscreen');
       yesBtn.textContent = "ДА" + "!".repeat(yesLevel + 2);
     }
@@ -335,8 +343,13 @@
       draw();
     }
 
-    // Стартовая позиция "нет"
-    window.onload = () => setNoBtnPos();
+    window.onload = () => {
+      setNoBtnPos();
+      emoji.classList.remove("visible");
+      emoji.textContent = "";
+      fullscreened = false;
+      gameEnded = false;
+    };
     window.onresize = () => { if (!gameEnded) setNoBtnPos(); };
   </script>
 </body>

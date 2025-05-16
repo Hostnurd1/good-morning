@@ -6,73 +6,117 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
-      font-family: sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      background: #f6fafd;
+      background: linear-gradient(120deg, #FFDEE9 0%, #B5FFFC 100%);
     }
     .question {
-      margin-top: 40px;
-      font-size: 1.3em;
-      font-weight: 600;
+      margin-top: 20px;
+      font-size: 2em;
+      font-weight: 700;
+      color: #8a3559;
+      text-align: center;
+      margin-bottom: 40px;
     }
     .buttons {
-      margin-top: 24px;
       display: flex;
+      flex-direction: column;
+      align-items: center;
       gap: 20px;
     }
-    button {
-      padding: 12px 24px;
-      font-size: 1em;
-      border: none;
-      border-radius: 12px;
-      background: #4f8cff;
+    #yes-btn {
+      padding: 16px 32px;
+      background: #36b545;
       color: #fff;
+      font-size: 2em;
+      font-weight: 700;
+      border: none;
+      border-radius: 20px;
+      transition: all 0.2s cubic-bezier(.39,.58,.57,1.27);
+      box-shadow: 0 6px 32px #36b5451b;
       cursor: pointer;
-      transition: 0.2s;
-      box-shadow: 0 4px 20px #4f8cff11;
-      position: relative;
-      z-index: 1;
+      margin-bottom: 8px;
+      min-width: 160px;
       user-select: none;
     }
-    button:active {
-      background: #2e5ec4;
-    }
     #no-btn {
-      position: relative;
+      padding: 14px 30px;
+      background: #be2a2a;
+      color: #fff;
+      font-size: 1.3em;
+      border: none;
+      border-radius: 16px;
+      font-weight: 600;
+      transition: all 0.2s cubic-bezier(.39,.58,.57,1.27);
+      cursor: pointer;
+      user-select: none;
+    }
+    @media (max-width: 500px) {
+      .question { font-size: 1.2em; }
+      #yes-btn { font-size: 1.2em; min-width: 110px;}
+      #no-btn { font-size: 1em; }
     }
   </style>
 </head>
 <body>
-  <h1>Доброе утро!</h1>
-  <div class="question">Давай проверим твое состояние:</div>
+  <div class="question">
+    Сегодня важный день! <br>
+    Готова получить заряд уверенности перед экзаменом?
+  </div>
   <div class="buttons">
-    <button onclick="alert('Круто! Хорошего дня!')">Да</button>
+    <button id="yes-btn">Да!</button>
     <button id="no-btn">Нет</button>
   </div>
   <script>
+    const yesBtn = document.getElementById('yes-btn');
     const noBtn = document.getElementById('no-btn');
-    let moveCount = 0;
-    function moveBtn() {
-      moveCount++;
-      noBtn.style.transform = `translate(${(Math.random()-0.5)*300}px, ${(Math.random()-0.5)*120}px)`;
-      if (moveCount > 4) noBtn.innerText = "Неа :)";
-      if (moveCount > 7) noBtn.innerText = "Ну и ладно!";
-    }
-    // Для ПК — при наведении мышки
-    noBtn.addEventListener('mouseenter', moveBtn);
-    // Для мобильных — при каждом тапе
-    noBtn.addEventListener('touchstart', function(e) {
-      e.preventDefault();
-      moveBtn();
-    });
-    // Для ПК — чтобы и клик тоже двигал кнопку (по фану)
+    let yesCount = 0;
+
+    // При нажатии на "Нет" — "Да" увеличивается, "Нет" меняет текст
+    const noTexts = [
+      "Нет",
+      "Точно нет?",
+      "Ну может всё-таки да?",
+      "Не обманывай, ты готова!",
+      "Попробуй нажать Да!",
+      "Ещё разок для уверенности!",
+      "Ну ладно, ща увеличим кнопку...",
+    ];
+    const yesTexts = [
+      "Да!",
+      "ДА!!",
+      "ДА!!!",
+      "ДА!!!!",
+      "ДА!!!!!",
+      "ДА!!!!!!",
+      "ДА!!!!!!!!",
+      "Пора жать :)"
+    ];
+
     noBtn.addEventListener('click', function(e) {
       e.preventDefault();
-      moveBtn();
+      yesCount++;
+      // Увеличиваем кнопку "Да"
+      let scale = 1 + yesCount * 0.3;
+      yesBtn.style.transform = `scale(${scale})`;
+      yesBtn.style.fontSize = `${2 + yesCount*0.5}em`;
+      yesBtn.innerText = yesTexts[Math.min(yesCount, yesTexts.length-1)];
+
+      // Меняем текст "Нет"
+      noBtn.innerText = noTexts[Math.min(yesCount, noTexts.length-1)];
+      if (yesCount > 7) {
+        noBtn.style.opacity = '0.5';
+        noBtn.innerText = 'Жми на зелёную!';
+      }
+    });
+
+    // При нажатии на "Да" — переход на страницу успеха (можешь заменить на свою)
+    yesBtn.addEventListener('click', function() {
+      window.location.href = "success.html";
     });
   </script>
 </body>

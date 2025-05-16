@@ -3,298 +3,285 @@
 <head>
   <meta charset="UTF-8">
   <title>Доброе утро, Алёна!</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    html, body { height: 100%; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
-      font-family: 'Segoe UI', sans-serif;
-      min-height: 100vh;
-      background: linear-gradient(120deg, #FFDEE9 0%, #B5FFFC 100%);
-      overflow-x: hidden;
-      position: relative;
-    }
-    .good-morning {
-      margin-top: 32px;
-      font-size: 2.3em;
-      font-weight: 800;
-      color: #7e2771;
-      text-align: center;
-      letter-spacing: 1.5px;
-      user-select: none;
-      z-index: 2;
-      position: relative;
-    }
-    .wish {
-      margin-top: 10px;
-      font-size: 1.2em;
-      color: #44485a;
-      text-align: center;
-      font-weight: 400;
-      max-width: 90vw;
-      line-height: 1.3;
-      margin-bottom: 22px;
-      z-index: 2;
-      position: relative;
-    }
-    .question {
-      margin-top: 14px;
-      font-size: 1.3em;
-      font-weight: 600;
-      color: #7e2771;
-      text-align: center;
-      margin-bottom: 36px;
-      z-index: 2;
-      position: relative;
-      line-height: 1.3;
-    }
-    .center-box {
+      height: 100vh;
+      width: 100vw;
+      background: linear-gradient(120deg, #f2a6b1 0%, #eec6cb 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      margin-top: 10px;
-      position: relative;
-      min-height: 40vh;
-    }
-    .yes-container {
-      display: flex; align-items: center; justify-content: center;
-      width: 260px; height: 90px;
-      background: #36b545;
-      border-radius: 32px;
-      transition: width 0.25s cubic-bezier(.39,.58,.57,1.27), height 0.25s cubic-bezier(.39,.58,.57,1.27), border-radius 0.3s;
-      z-index: 2;
-      box-shadow: 0 6px 32px #36b5451b;
-      margin-bottom: 26px;
-      overflow: hidden;
-      will-change: width, height, border-radius;
-      position: relative;
-    }
-    #yes-btn {
-      background: transparent; border: none; color: #fff;
-      font-size: 2.2em; font-weight: 900; width: 100%; height: 100%;
-      cursor: pointer; transition: font-size 0.2s, color 0.2s; user-select: none;
-      z-index: 3; outline: none;
-      pointer-events: all;
-    }
-    #no-btn {
-      padding: 14px 30px; background: #be2a2a; color: #fff; font-size: 1.3em;
-      border: none; border-radius: 16px; font-weight: 600;
-      transition: left 0.25s, top 0.25s, background 0.2s, color 0.2s;
-      cursor: pointer; user-select: none;
-      position: absolute;
-      left: 50%; top: calc(100% + 20px); /* стартует под "ДА" */
-      transform: translate(-50%, 0);
-      z-index: 10;
-    }
-    .egg {
-      display: block;
-      margin: 18px auto 0 auto;
-      font-size: 0.95em;
-      color: #6e89a6;
-      cursor: pointer;
-      text-decoration: underline;
-      text-align: center;
-      opacity: 0.7;
-      transition: opacity 0.2s;
-      z-index: 2; position: relative;
-    }
-    .egg:hover { opacity: 1; }
-    @media (max-width: 500px) {
-      .good-morning { font-size: 1.3em; }
-      .wish { font-size: 1em; }
-      .question { font-size: 1em; }
-      .yes-container { width: 130px; height: 50px;}
-      #yes-btn { font-size: 1.1em;}
-      #no-btn { font-size: 1em; }
-    }
-    .fullscreen-yes {
-      position: fixed !important;
-      left: 0 !important; top: 0 !important;
-      width: 100vw !important; height: 100vh !important;
-      border-radius: 0 !important;
-      margin: 0 !important;
-      z-index: 1000 !important;
-      display: flex;
-      align-items: center;
       justify-content: center;
-      box-shadow: none !important;
-      transition: all 0.4s cubic-bezier(.39,.58,.57,1.27);
-      pointer-events: all;
+      overflow: hidden;
+      transition: background 0.6s;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      z-index: 1;
+      position: relative;
+    }
+    .goodmorning {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #fff;
+      text-shadow: 0 2px 6px #d18092b7;
+      font-weight: 700;
+    }
+    .question {
+      font-size: 1.6rem;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      color: #9c2a3b;
+      text-align: center;
+      max-width: 95vw;
+      min-height: 3.2rem;
+      transition: 0.2s;
+    }
+    .valentine {
+      font-size: 2.4rem;
+      color: #ad415d;
+      font-family: 'Georgia', serif;
+      margin-bottom: 2.2rem;
+      font-style: italic;
+      font-weight: bold;
+      text-shadow: 0 2px 6px #fff8;
+    }
+    .btns {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100vw;
+      position: relative;
+      min-height: 6rem;
+    }
+    .yes-btn {
+      background: #27c54f;
+      color: #fff;
+      font-size: 1.7rem;
+      font-weight: bold;
+      padding: 1.1rem 2.7rem;
+      border: none;
+      border-radius: 1.2rem;
+      margin-bottom: 1.2rem;
+      transition: font-size 0.18s, padding 0.18s, width 0.2s, height 0.2s;
+      cursor: pointer;
+      z-index: 2;
+      position: relative;
+      box-shadow: 0 2px 10px #b3eabf77;
+    }
+    .no-btn {
+      background: #bb2323;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: bold;
+      padding: 0.8rem 1.7rem;
+      border: none;
+      border-radius: 1.2rem;
+      margin-top: 0.5rem;
+      position: absolute;
+      left: 50%;
+      top: 65%;
+      transform: translate(-50%, 0);
+      transition: left 0.5s, top 0.5s, font-size 0.12s, padding 0.12s;
+      cursor: pointer;
+      z-index: 5;
+      min-width: 95px;
+      min-height: 40px;
+      user-select: none;
+    }
+    .confetti {
+      position: fixed;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 100;
     }
     .hidden {
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s;
+      display: none !important;
     }
-    .fullscreen-yes #yes-btn {
-      font-size: 12vw !important;
-      text-shadow: 0 3px 16px #217f31aa;
-      font-weight: 900;
+    @media (max-width: 600px) {
+      .goodmorning { font-size: 2rem; }
+      .question { font-size: 1.1rem; }
+      .valentine { font-size: 1.4rem; }
+      .yes-btn { font-size: 1.3rem; padding: 0.8rem 1.5rem; }
+      .no-btn { font-size: 1rem; padding: 0.7rem 1.1rem; }
     }
   </style>
 </head>
 <body>
-  <div class="good-morning" id="gm">Доброе утро, Алёна!</div>
-  <div class="wish" id="wish">
-    Пусть этот день начнётся с улыбки.<br>
-    Я верю, что у тебя всё получится — ты сильная, умная и красивая!
-  </div>
-  <div class="question" id="question">
-    <b>Сегодня важный день!</b><br>
-    А теперь — готова получить<br>
-    заряд уверенности перед экзаменом?<br>
-    (Если вдруг сомневаешься — просто жми на "Да"!<br>А если сильно сомневаешься — попробуй нажать "Нет" пару раз...)
-  </div>
-  <div class="center-box">
-    <div class="yes-container" id="yes-container">
-      <button id="yes-btn">ДА!</button>
+  <div class="container">
+    <div class="goodmorning" id="gm">Доброе утро!</div>
+    <div class="question" id="question">Ты готова? Ты всё сможешь!</div>
+    <div class="valentine">Will be my <span style="color:#e94271;">Valentine?</span></div>
+    <div class="btns">
+      <button class="yes-btn" id="yesBtn">Да!</button>
+      <button class="no-btn" id="noBtn">Нет</button>
     </div>
-    <button id="no-btn">Нет</button>
   </div>
-  <div class="egg" id="egg">🐣 Не жми сюда!</div>
+  <canvas class="confetti hidden" id="confetti"></canvas>
   <script>
-    const yesBtn = document.getElementById('yes-btn');
-    const yesContainer = document.getElementById('yes-container');
-    const noBtn = document.getElementById('no-btn');
-    const gm = document.getElementById('gm');
-    const wish = document.getElementById('wish');
-    const question = document.getElementById('question');
-    const egg = document.getElementById('egg');
-    const centerBox = document.querySelector('.center-box');
-    let yesCount = 0;
-    let fullscreenStage = false;
-
-    // Пасхалка
-    egg.addEventListener('click', () => {
-      alert("🥚 Ты нашла пасхалку! Значит, удача точно на твоей стороне сегодня ;)");
-    });
-
-    const noTexts = [
+    // Фразы для "нет"
+    const noPhrases = [
       "Нет",
       "Точно нет?",
-      "Ну может всё-таки да?",
-      "Не обманывай, ты готова!",
-      "Попробуй нажать Да!",
-      "Ещё разок для уверенности!",
-      "Жми на зелёную :)",
-      "Пора принимать уверенность!"
+      "Может, всё-таки да?",
+      "Ты уверена?",
+      "А если попробовать?",
+      "Ну давай, рискни!",
+      "Ты справишься!",
+      "Давай уже жми «да»!",
+      "Последний шанс сказать да!"
     ];
-    const yesTexts = [
-      "ДА!",
-      "ДА!!",
-      "ДА!!!",
-      "ДА!!!!",
-      "ДА!!!!!",
-      "ДА!!!!!!",
-      "ДА!!!!!!!"
+    // Поддерживающие фразы (будет меняться под кнопками)
+    const supportPhrases = [
+      "Ты сильная, у тебя всё получится!",
+      "Ты сегодня удивишь экзаменатора!",
+      "Ты знаешь больше, чем думаешь.",
+      "Поверить в себя — твоя суперсила.",
+      "Я уверен(а) в тебе!",
+      "Ты справишься с этим на раз-два!",
+      "Просто будь собой — и всё получится!",
+      "Экзамен? Пфф, это не страшно для тебя!",
+      "Пора показать всем, кто тут звезда!"
     ];
 
-    // Сдвигаем кнопку "Нет" в случайное место
-    function moveNoButton() {
-      if (fullscreenStage) return;
-      const padding = 20;
-      const btnWidth = noBtn.offsetWidth;
-      const btnHeight = noBtn.offsetHeight;
-      const boxRect = centerBox.getBoundingClientRect();
+    let noClicks = 0;
+    let yesLevel = 1;
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const gm = document.getElementById('gm');
+    const question = document.getElementById('question');
+    const confetti = document.getElementById('confetti');
 
-      // Делаем так, чтобы не вылазила за пределы .center-box (но не накладывалась на "ДА")
-      let minTop = boxRect.top;
-      let maxTop = boxRect.bottom - btnHeight - padding;
-      let minLeft = boxRect.left + padding;
-      let maxLeft = boxRect.right - btnWidth - padding;
-
-      let newTop = Math.random() * (maxTop - minTop) + minTop;
-      let newLeft = Math.random() * (maxLeft - minLeft) + minLeft;
-
-      // Переводим в проценты для адаптивности
-      const vh = window.innerHeight;
-      const vw = window.innerWidth;
-      noBtn.style.left = ((newLeft / vw) * 100) + 'vw';
-      noBtn.style.top = ((newTop / vh) * 100) + 'vh';
-      noBtn.style.transform = "none";
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min)) + min;
     }
 
-    // Центрируем кнопку "Нет" под "ДА" при запуске
-    function centerNoButton() {
-      noBtn.style.left = "50%";
-      noBtn.style.top = "calc(100% + 20px)";
-      noBtn.style.transform = "translate(-50%, 0)";
+    // Перемещение кнопки "нет" по экрану
+    function moveNoBtn() {
+      const btnsRect = document.querySelector('.btns').getBoundingClientRect();
+      const noRect = noBtn.getBoundingClientRect();
+      const padding = 10;
+      const maxLeft = window.innerWidth - noRect.width - padding;
+      const maxTop = window.innerHeight - noRect.height - padding - 60;
+      let left, top;
+      // Не даём "нет" перекрыться с "да"
+      let attempts = 0;
+      do {
+        left = getRandomInt(padding, maxLeft);
+        top = getRandomInt(140, maxTop);
+        attempts++;
+      } while (
+        Math.abs(left - yesBtn.offsetLeft) < yesBtn.offsetWidth + 10 &&
+        Math.abs(top - yesBtn.offsetTop) < yesBtn.offsetHeight + 10 &&
+        attempts < 10
+      );
+      noBtn.style.left = left + "px";
+      noBtn.style.top = top + "px";
     }
 
-    // Действие по клику/тапу на "Нет"
-    function handleNoBtn() {
-      if (fullscreenStage) return;
-      yesCount++;
-      moveNoButton();
-      const steps = 7;
-      const minWidth = Math.min(window.innerWidth * 0.55, 320);
-      const maxWidth = window.innerWidth;
-      const minHeight = Math.min(window.innerHeight * 0.14, 110);
-      const maxHeight = window.innerHeight * 0.7;
-
-      let width, height;
-      if (yesCount < steps - 1) {
-        width = minWidth + (maxWidth - minWidth) * yesCount / steps;
-        height = minHeight + (maxHeight - minHeight) * yesCount / steps;
-        yesContainer.style.width = `${width}px`;
-        yesContainer.style.height = `${height}px`;
+    // Обработка нажатия "нет"
+    noBtn.onclick = () => {
+      noClicks++;
+      // Меняем фразу
+      let newNo = noPhrases[Math.min(noClicks, noPhrases.length-1)];
+      noBtn.textContent = newNo;
+      // Перемещаем кнопку
+      moveNoBtn();
+      // Растим "да"
+      yesLevel++;
+      yesBtn.textContent = "Да" + "!".repeat(yesLevel);
+      yesBtn.style.fontSize = (1.7 + yesLevel*0.3) + "rem";
+      yesBtn.style.padding = (1.1 + yesLevel*0.15) + "rem " + (2.7 + yesLevel*0.3) + "rem";
+      // Скрываем "Доброе утро!" после первого клика
+      if (gm && !gm.classList.contains('hidden')) gm.classList.add('hidden');
+      // Меняем поддерживающий текст иногда
+      if (noClicks < supportPhrases.length) {
+        question.textContent = supportPhrases[noClicks];
       }
-
-      yesBtn.innerText = yesTexts[Math.min(yesCount, yesTexts.length-1)];
-      yesBtn.style.fontSize = `${2.2 + yesCount*0.6}em`;
-      noBtn.innerText = noTexts[Math.min(yesCount, noTexts.length-1)];
-
-      // Последний шаг — fullscreen "ДА"
-      if (yesCount >= steps - 1) {
-        fullscreenStage = true;
-        yesContainer.classList.add('fullscreen-yes');
-        yesContainer.style.width = "100vw";
-        yesContainer.style.height = "100vh";
-        yesBtn.innerText = "ДА!!!!!!!";
-        yesBtn.style.fontSize = "12vw";
-        gm.classList.add('hidden');
-        wish.classList.add('hidden');
-        question.classList.add('hidden');
-        egg.classList.add('hidden');
-        noBtn.classList.add('hidden');
+      // В конце — делаем "да" огромным и запускаем финал
+      if (yesLevel >= 6) {
+        finish();
       }
+    };
+
+    // Обработка нажатия "да"
+    yesBtn.onclick = () => {
+      yesLevel++;
+      yesBtn.textContent = "Да" + "!".repeat(yesLevel);
+      yesBtn.style.fontSize = (1.7 + yesLevel*0.3) + "rem";
+      yesBtn.style.padding = (1.1 + yesLevel*0.15) + "rem " + (2.7 + yesLevel*0.3) + "rem";
+      if (gm && !gm.classList.contains('hidden')) gm.classList.add('hidden');
+      if (yesLevel >= 6) {
+        finish();
+      }
+    };
+
+    function finish() {
+      document.body.style.background = "#27c54f";
+      yesBtn.style.position = "fixed";
+      yesBtn.style.left = "50%";
+      yesBtn.style.top = "50%";
+      yesBtn.style.transform = "translate(-50%, -50%)";
+      yesBtn.style.fontSize = "clamp(3rem, 15vw, 8rem)";
+      yesBtn.style.padding = "3vw 13vw";
+      yesBtn.textContent = "ДА" + "!".repeat(yesLevel + 1);
+      question.classList.add('hidden');
+      noBtn.classList.add('hidden');
+      document.querySelector('.valentine').classList.add('hidden');
+      showConfetti();
     }
 
-    // На старте центрируем
-    window.addEventListener('DOMContentLoaded', centerNoButton);
-    window.addEventListener('resize', centerNoButton);
-
-    // На клик и тап по "Нет" — и на мобильных, и на ПК
-    noBtn.addEventListener('click', handleNoBtn);
-    noBtn.addEventListener('touchstart', function(e) {
-      e.preventDefault();
-      handleNoBtn();
-    });
-
-    // Пасхалка: долгое нажатие на "Нет"
-    let holdTimeout;
-    noBtn.addEventListener('mousedown', () => {
-      holdTimeout = setTimeout(() => {
-        alert("💡 Держишь 'Нет'? Ловко! Но в жизни иногда стоит просто попробовать :)");
-      }, 1200);
-    });
-    noBtn.addEventListener('mouseup', () => clearTimeout(holdTimeout));
-    noBtn.addEventListener('mouseleave', () => clearTimeout(holdTimeout));
-    noBtn.addEventListener('touchstart', () => {
-      holdTimeout = setTimeout(() => {
-        alert("💡 Долгое нажатие на 'Нет' тоже пасхалка! Попробуй и на 'Да' ;)");
-      }, 1200);
-    });
-    noBtn.addEventListener('touchend', () => clearTimeout(holdTimeout));
-
-    yesBtn.addEventListener('click', function(e) {
-      if (fullscreenStage) {
-        yesBtn.innerText = "Ты готова на 100%!";
-        setTimeout(() => {
-          window.location.href = "success.html";
-        }, 1100);
+    // Простая конфетти-анимация
+    function showConfetti() {
+      confetti.width = window.innerWidth;
+      confetti.height = window.innerHeight;
+      confetti.classList.remove('hidden');
+      const ctx = confetti.getContext('2d');
+      const pieces = [];
+      for (let i = 0; i < 160; i++) {
+        pieces.push({
+          x: Math.random() * confetti.width,
+          y: Math.random() * -confetti.height,
+          w: getRandomInt(6, 12),
+          h: getRandomInt(14, 22),
+          color: `hsl(${getRandomInt(0,360)}, 88%, 58%)`,
+          speed: Math.random() * 4 + 2,
+          angle: Math.random() * Math.PI * 2,
+          spin: Math.random() * 0.1 + 0.01
+        });
       }
-    });
+      let frame = 0;
+      function draw() {
+        ctx.clearRect(0,0,confetti.width,confetti.height);
+        for (let p of pieces) {
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.angle + frame * p.spin);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+          ctx.restore();
+          p.y += p.speed;
+          if (p.y > confetti.height + 20) p.y = -30;
+        }
+        frame++;
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+    // Начальное позиционирование "нет"
+    window.onload = () => moveNoBtn();
+    window.onresize = () => moveNoBtn();
   </script>
 </body>
 </html>
+

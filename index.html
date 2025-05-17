@@ -190,6 +190,15 @@
     <div id="bear" style="display:none;"></div>
     <div id="cloud" style="display:none;"></div>
   </div>
+    <div id="nextPage" style="display:none;flex-direction:column;align-items:center;justify-content:center;height:100vh;width:100vw;">
+    <h2 style="margin-top:40px;margin-bottom:24px;font-size:2rem;">Какое у тебя настроение?</h2>
+    <div style="display:flex;flex-direction:column;align-items:center;">
+      <div id="emojiValue" style="font-size:3rem;margin-bottom:10px;">😴</div>
+      <input type="range" id="moodSlider" min="1" max="5" step="1" value="1" style="width:230px;">
+      <div id="moodLabel" style="margin-top:12px;font-size:1.15rem;font-weight:700;letter-spacing:1px;">Сонная</div>
+      <button id="moodConfirm" style="margin-top:30px;font-size:1.2rem;padding:10px 36px;border-radius:1em;border:none;background:linear-gradient(90deg,#00b09b,#96c93d);color:#fff;font-weight:800;box-shadow:0 4px 16px #b3eabf61;cursor:pointer;">Подтвердить</button>
+    </div>
+  </div>
   <canvas class="confetti hidden" id="confetti"></canvas>
   <script>
     // ВСЕ ФИШКИ — все массивы и функции:
@@ -469,8 +478,13 @@
       draw();
     }
     // обработчики:
-    yesBtn.onclick = () => {
-      if (gameEnded) return;
+   yesBtn.onclick = () => {
+  // Переход к следующему (после финального большого ДА)
+  if (fullscreened && gameEnded) {
+    showNextPage(); // Показываем ползунок
+    return;
+  }
+  if (gameEnded) return;
       yesClicks++;
       growYesBtn();
       showSmileDa();
@@ -491,6 +505,33 @@
       checkEasterEgg();
       if (noClicks === 2 || noClicks === 3 || noClicks === 5 || noClicks === 7) showBear();
     };
+    // --- ползунок настроения ---
+const moods = [
+  {emoji: "😴", label: "Сонная"},
+  {emoji: "🙃", label: "Нормально"},
+  {emoji: "🙂", label: "Хорошо"},
+  {emoji: "😎", label: "В боевом духе!"},
+  {emoji: "🔥", label: "Готова на все 100%!"}
+];
+const nextPage = document.getElementById('nextPage');
+const moodSlider = document.getElementById('moodSlider');
+const emojiValue = document.getElementById('emojiValue');
+const moodLabel = document.getElementById('moodLabel');
+const moodConfirm = document.getElementById('moodConfirm');
+
+function showNextPage() {
+  document.getElementById('main-content').style.display = "none";
+  nextPage.style.display = "flex";
+}
+if(moodSlider) moodSlider.oninput = function() {
+  const idx = parseInt(moodSlider.value)-1;
+  emojiValue.textContent = moods[idx].emoji;
+  moodLabel.textContent = moods[idx].label;
+};
+if(moodConfirm) moodConfirm.onclick = function() {
+  alert("Выбрано: " + moods[parseInt(moodSlider.value)-1].label + " " + moods[parseInt(moodSlider.value)-1].emoji);
+  // Здесь можешь показать новый блок или сделать дальнейший переход
+};
     window.onload = () => {
       noClicks = 0; yesClicks = 0; yesLevel = 1; gameEnded = false; fullscreened = false;
       updateYesBtn(); setNoBtnPos();

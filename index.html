@@ -59,18 +59,89 @@
       display: inline-block;
       position: relative;
       z-index: 1;
-      opacity: 0;
-      animation: fadeMotivation 0.7s;
-    }
-    .motivation.visible { opacity: 1; }
-    @keyframes fadeMotivation {
-      0% { opacity: 0; transform: scale(0.92);}
-      35% { opacity: 1; transform: scale(1.04);}
-      80% { opacity: 1; transform: scale(1);}
-      100% { opacity: 1; }
+      opacity: 1;
     }
     .btns { display: flex; flex-direction: column; align-items: center; width: 100vw; min-height: 8rem; position: relative; }
+    .da-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(90deg, #00b09b 0%, #96c93d 100%);
+      border-radius: 2em;
+      box-shadow: 0 4px 16px #b3eabf61;
+      margin: 0.4em auto 0.1em auto;
+      transition: min-width 0.25s, min-height 0.25s, font-size 0.23s, padding 0.21s, margin 0.21s;
+      position: relative;
+      z-index: 11;
+      user-select: none;
+      cursor: pointer;
+      padding: 0.6em 1.4em;
+      min-width: 105px;
+      min-height: 52px;
+      max-width: 94vw;
+      max-height: 60vh;
+      animation: daPulse 1.3s infinite alternate;
+    }
+    @keyframes daPulse {
+      from { box-shadow: 0 0 11px 2px #38ef7d99;}
+      to   { box-shadow: 0 0 23px 8px #b4fda4b3;}
+    }
+    .da-row {
+      font-size: 1.06rem;
+      color: #fff;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      min-height: 1.01em;
+      user-select: none;
+      text-align: center;
+      width: 100%;
+      pointer-events: none;
+      line-height: 1.13;
+      transition: font-size 0.17s;
+    }
+    .da-center {
+      font-size: 1.45rem;
+      color: #fff;
+      font-weight: 900;
+      line-height: 1.17;
+      user-select: none;
+      text-shadow: 0 2px 8px #36d67fa7;
+      margin: 0.1em 0 0.1em 0;
+      letter-spacing: 0.14em;
+      text-align: center;
+      pointer-events: none;
+      transition: font-size 0.19s;
+    }
+    .da-block.mid {
+      min-width: 152px;
+      min-height: 70px;
+      padding: 0.92em 2em;
+    }
+    .da-block.big {
+      min-width: 225px;
+      min-height: 115px;
+      font-size: 2rem;
+      padding: 1.12em 2.5em;
+    }
+    .da-block.final {
+      width: 97vw !important; height: 91vh !important;
+      min-width: unset; min-height: unset; max-width: unset; max-height: unset;
+      border-radius: 1.2em !important; margin: 0 !important; padding: 0 !important;
+      background: linear-gradient(90deg, #38ef7d 0%, #11998e 100%) !important;
+      position: fixed; left: 1vw; top: 4vh;
+      z-index: 150;
+      animation: daFinalPulse 0.9s infinite alternate;
+      box-shadow: 0 0 110px 30px #21cf8e88;
+      display: flex; justify-content: center; align-items: center;
+    }
+    @keyframes daFinalPulse {
+      from { box-shadow: 0 0 80px 18px #5fff82b5;}
+      to   { box-shadow: 0 0 140px 60px #b4fda4b3;}
+    }
     .no-btn {
+      margin-top: 0.4em !important;
+      margin-bottom: 0.1em !important;
       background: linear-gradient(90deg, #ef473a 0%, #cb2d3e 100%);
       color: #fff;
       font-size: 1.1rem;
@@ -78,7 +149,6 @@
       padding: 0.7rem 2rem;
       border: none;
       border-radius: 1.2rem;
-      margin-top: 10px;
       cursor: pointer;
       min-width: 95px;
       min-height: 40px;
@@ -86,16 +156,7 @@
       display: block;
       position: static;
       z-index: 5;
-      transition: font-size 0.15s, padding 0.15s, margin-top 0.3s, background 0.13s, filter 0.13s;
-    }
-    .no-btn.shake {
-      animation: shake 0.35s;
-    }
-    @keyframes shake {
-      10%, 90% { transform: translateX(-2px); }
-      20%, 80% { transform: translateX(3px); }
-      30%, 50%, 70% { transform: translateX(-4px); }
-      40%, 60% { transform: translateX(4px); }
+      transition: margin 0.17s;
     }
     .plus1 {
       position: absolute;
@@ -277,86 +338,14 @@
         opacity: 0;
       }
     }
-    /* ——— КНОПКА ДА ——— */
-    .da-block {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin: 1.5em auto 1em auto;
-      min-width: 190px;
-      min-height: 130px;
-      background: linear-gradient(90deg, #00b09b 0%, #96c93d 100%);
-      border-radius: 2.3em;
-      box-shadow: 0 6px 28px #7decd5b3, 0 0 40px #baeec1b3;
-      transition: 
-        min-width 0.28s cubic-bezier(.7,1.6,.3,1), 
-        min-height 0.28s cubic-bezier(.7,1.6,.3,1),
-        background 0.35s,
-        box-shadow 0.34s;
-      animation: daPulse 1.2s infinite alternate;
-      position: relative;
-      z-index: 11;
-      padding: 1em 2.4em;
-      max-width: 95vw;
-      max-height: 74vh;
-      cursor: pointer;
-      user-select: none;
-    }
-    @keyframes daPulse {
-      from { box-shadow: 0 0 22px 6px #38ef7db5, 0 0 44px #b6f8c5b3;}
-      to   { box-shadow: 0 0 45px 24px #b4fda4b3, 0 0 75px #e5ffc0b3;}
-    }
-    .da-row {
-      font-size: 2.1rem;
-      color: #fff;
-      font-weight: 900;
-      line-height: 1.08;
-      letter-spacing: 0.11em;
-      min-height: 1.2em;
-      user-select: none;
-      text-align: center;
-      width: 100%;
-      transition: font-size 0.18s;
-      pointer-events: none;
-    }
-    .da-center {
-      font-size: 3.8rem;
-      color: #fff;
-      font-weight: 900;
-      line-height: 1.18;
-      user-select: none;
-      text-shadow: 0 2px 8px #36d67fa7;
-      margin: 0.09em 0 0.09em 0;
-      letter-spacing: 0.2em;
-      text-align: center;
-      transition: font-size 0.2s;
-      pointer-events: none;
-    }
-    .da-block.final {
-      width: 100vw !important; height: 100vh !important;
-      min-width: unset; min-height: unset; max-width: unset; max-height: unset;
-      border-radius: 0 !important; margin: 0 !important; padding: 0 !important;
-      background: linear-gradient(90deg, #38ef7d 0%, #11998e 100%) !important;
-      position: fixed; left: 0; top: 0;
-      z-index: 150;
-      animation: daFinalPulse 0.9s infinite alternate;
-      box-shadow: 0 0 200px 80px #21cf8e88;
-      display: flex; justify-content: center; align-items: center;
-    }
-    @keyframes daFinalPulse {
-      from { box-shadow: 0 0 100px 38px #5fff82b5, 0 0 120px #b6f8c5b3;}
-      to   { box-shadow: 0 0 240px 90px #b4fda4b3, 0 0 300px #e5ffc0b3;}
-    }
     @media (max-width: 600px) {
-      .emoji { font-size: 1.45rem; height: 1.7rem; line-height: 1.7rem; margin-bottom: 0.3rem;}
       .goodmorning { font-size: 1.3rem; }
       .main-question { font-size: 1.02rem; }
       .motivation { font-size: 0.92rem; }
+      .da-row { font-size: 0.92rem;}
+      .da-center { font-size: 1.02rem;}
       .bear { font-size: 1.4rem; }
       .cloud { font-size: 0.97rem; padding: 0.45em 1em;}
-      .da-row { font-size: 1.11rem;}
-      .da-center { font-size: 2.2rem;}
     }
   </style>
 </head>
@@ -371,165 +360,61 @@
     <div class="btns" style="position:relative;">
       <div class="da-block" id="daBlock" tabindex="0" role="button">
         <div class="da-row" id="daTop"></div>
-        <div class="da-center" id="daText">ДА</div>
+        <div class="da-center" id="daText">ДА!</div>
         <div class="da-row" id="daBottom"></div>
       </div>
       <button class="no-btn" id="noBtn">Нет</button>
     </div>
     <div id="plus1-container"></div>
+    <div id="effects-root"></div>
+    <div id="bear" style="display:none;"></div>
+    <div id="cloud" style="display:none;"></div>
   </div>
   <canvas class="confetti hidden" id="confetti"></canvas>
-  <div id="bear" style="display:none;"></div>
-  <div id="cloud" style="display:none;"></div>
-  <div id="effects-root"></div>
   <script>
-    let noClicks = 0;
-    let yesClicks = 0;
-    let actionHistory = [];
-    let yesLevel = 1;
-    let gameEnded = false;
-    let fullscreened = false;
-    let inactivityTimer;
-    let bearTimeout = null;
-
-    const noPhrases = [
-      "Нет",
-      "Ты уверена?",
-      "Может, всё-таки да?",
-      "Ну же, рискни!",
-      "Справишься же!",
-      "Ты сможешь!",
-      "Последний шанс!",
-      "Не бойся, всё получится!",
-      "Жми «да»!"
-    ];
-    const supportPhrases = [
-      "Всё получится, даже если волнуешься!",
-      "Ты умнее, чем думаешь.",
-      "Верь в себя, это главное.",
-      "Ты сильнее, чем ты думаешь.",
-      "Просто сделай шаг вперёд.",
-      "У тебя уже всё есть для победы.",
-      "Экзамен не страшен, если ты уверена!",
-      "Сегодня твой день!",
-      "Действуй — и всё получится!",
-      "Ты удивишь всех, в том числе и себя."
-    ];
-    const yesPhrases = [
-      "Вот это настрой!",
-      "Так держать!",
-      "Ты огонь!",
-      "Ты делаешь шаг вперёд!",
-      "Это уверенность!",
-      "Супер — идём дальше!",
-      "Зарядилась энергией!",
-      "Твой настрой топ!",
-      "Вперёд к победе!"
-    ];
+    // --- все фразы/данные ---
+    let noClicks = 0, yesClicks = 0, yesLevel = 1, gameEnded = false, fullscreened = false;
+    let inactivityTimer, bearTimeout = null, actionHistory = [], lastActions = [];
+    const noPhrases = ["Нет","Ты уверена?","Может, всё-таки да?","Ну же, рискни!","Справишься же!","Ты сможешь!","Последний шанс!","Не бойся, всё получится!","Жми «да»!"];
+    const supportPhrases = ["Всё получится, даже если волнуешься!","Ты умнее, чем думаешь.","Верь в себя, это главное.","Ты сильнее, чем ты думаешь.","Просто сделай шаг вперёд.","У тебя уже всё есть для победы.","Экзамен не страшен, если ты уверена!","Сегодня твой день!","Действуй — и всё получится!","Ты удивишь всех, в том числе и себя."];
+    const yesPhrases = ["Вот это настрой!","Так держать!","Ты огонь!","Ты делаешь шаг вперёд!","Это уверенность!","Супер — идём дальше!","Зарядилась энергией!","Твой настрой топ!","Вперёд к победе!"];
     const emojis = ['🥲','☹️','😢','😔','😒','😑'];
-    const plusVariants = [
-      "+1 уверенность", "+1 вера в себя", "+1 смелость", "+1 решимость", "+1 лайк"
-    ];
-    const bears = [
-      "🧸 Я верю в тебя!",
-      "🐻 Ты справишься!",
-      "🐾 Ты уже молодец!",
-      "🧸 Ты не одна!",
-      "🐻 Ты самая сильная!",
-      "🧸 Я с тобой!"
-    ];
-    const clouds = [
-      "Я здесь, если что 🫶",
-      "Не бойся, просто нажми!",
-      "Сегодня всё получится!",
-      "У тебя уже есть всё нужное!",
-      "Доверяй себе :)",
-      "Главное — верить в себя!"
-    ];
-    const praises = [
-      "Ты невероятная!",
-      "Сегодня твой день!",
-      "Ты — гордость Вселенной!",
-      "Ты герой сегодняшнего утра!",
-      "Всё получилось, потому что ты — ты!",
-      "Мир стал ярче с твоей улыбкой!",
-      "Ты настоящая молодец!",
-      "Победа твоя — по-другому не бывает!"
-    ];
-    const fortunes = [
-      "Сегодня сбудется то, о чём ты думаешь прямо сейчас.",
-      "Этот день принесёт тебе сюрприз.",
-      "Вселенная улыбается тебе — пользуйся шансом!",
-      "Люди рядом ценят тебя больше, чем ты думаешь.",
-      "Сегодня повод быть счастливой — ты его заслужила!",
-      "Любое желание сегодня ближе, чем кажется."
-    ];
+    const plusVariants = ["+1 уверенность","+1 вера в себя","+1 смелость","+1 решимость","+1 лайк"];
+    const bears = ["🧸 Я верю в тебя!","🐻 Ты справишься!","🐾 Ты уже молодец!","🧸 Ты не одна!","🐻 Ты самая сильная!","🧸 Я с тобой!"];
+    const clouds = ["Я здесь, если что 🫶","Не бойся, просто нажми!","Сегодня всё получится!","У тебя уже всё нужное!","Доверяй себе :)","Главное — верить в себя!"];
+    const praises = ["Ты невероятная!","Сегодня твой день!","Ты — гордость Вселенной!","Ты герой сегодняшнего утра!","Всё получилось, потому что ты — ты!","Мир стал ярче с твоей улыбкой!","Ты настоящая молодец!","Победа твоя — по-другому не бывает!"];
+    const fortunes = ["Сегодня сбудется то, о чём ты думаешь прямо сейчас.","Этот день принесёт тебе сюрприз.","Вселенная улыбается тебе — пользуйся шансом!","Люди рядом ценят тебя больше, чем ты думаешь.","Сегодня повод быть счастливой — ты его заслужила!","Любое желание сегодня ближе, чем кажется."];
 
     const yesBtn = document.getElementById('daBlock');
     const daTop = document.getElementById('daTop');
     const daCenter = document.getElementById('daText');
     const daBottom = document.getElementById('daBottom');
     const noBtn = document.getElementById('noBtn');
-    const gm = document.getElementById('gm');
-    const mainQ = document.getElementById('mainQ');
-    const motivation = document.getElementById('motivation');
+    const progress = document.getElementById('progress');
+    const progressLabel = document.getElementById('progress-label');
     const emoji = document.getElementById('emoji');
-    const confetti = document.getElementById('confetti');
-    const mainContent = document.getElementById('main-content');
     const plus1Container = document.getElementById('plus1-container');
     const bear = document.getElementById('bear');
     const cloud = document.getElementById('cloud');
-    const progress = document.getElementById('progress');
-    const progressLabel = document.getElementById('progress-label');
     const effectsRoot = document.getElementById('effects-root');
-
-    function setNoBtnPos() {
-      const offset = Math.min(10 + (noClicks+yesClicks)*16, window.innerHeight * 0.45); // ограничиваем вниз
-      noBtn.style.marginTop = offset + "px";
+    const confetti = document.getElementById('confetti');
+    const gm = document.getElementById('gm');
+    const mainQ = document.getElementById('mainQ');
+    const motivation = document.getElementById('motivation');
+    // --- украшения ---
+    function spawnPetal() {
+      const petal = document.createElement('div');
+      petal.className = 'petal';
+      petal.style.left = (Math.random()*90+3) + "vw";
+      petal.style.top = "-24px";
+      petal.innerHTML = ['<svg width="24" height="24"><ellipse cx="12" cy="12" rx="8" ry="13" fill="#ffd6f6" /></svg>',
+                        '<svg width="24" height="24"><ellipse cx="12" cy="12" rx="9" ry="12" fill="#b3e9fd" /></svg>',
+                        '<svg width="24" height="24"><ellipse cx="12" cy="13" rx="7" ry="10" fill="#fff6b3" /></svg>',
+                        '<svg width="24" height="24"><ellipse cx="12" cy="12" rx="10" ry="10" fill="#ffe6d6" /></svg>'
+      ][Math.floor(Math.random()*4)];
+      document.body.appendChild(petal);
+      setTimeout(()=>petal.remove(),1700);
     }
-
-    function growYesBtn() {
-      yesLevel++;
-      updateDaBlock();
-      setNoBtnPos();
-      updateProgressBar();
-      if (yesLevel > 3 && yesLevel < 7) yesBtn.style.animationDuration = "0.95s";
-      if (yesLevel >= 7 && yesLevel < 11) yesBtn.style.animationDuration = "0.75s";
-      if (yesLevel >= 13 && !fullscreened) {
-        makeYesFullscreen();
-        finish();
-      }
-    }
-
-    function updateDaBlock() {
-      // Делаем симметричное распределение восклицательных знаков
-      let excls = yesLevel;
-      let top = Math.ceil(excls/2), bottom = Math.floor(excls/2);
-      daTop.textContent = '!'.repeat(top);
-      daCenter.textContent = "ДА";
-      daBottom.textContent = '!'.repeat(bottom);
-      // Блок растёт
-      yesBtn.style.minWidth = (190 + yesLevel*14) + "px";
-      yesBtn.style.minHeight = (130 + yesLevel*10) + "px";
-      daCenter.style.fontSize = (3.8 + yesLevel*0.12) + "rem";
-      daTop.style.fontSize = daBottom.style.fontSize = (2.0 + yesLevel*0.09) + "rem";
-      // финальный режим — full screen
-      if (yesLevel >= 13) yesBtn.classList.add('final');
-      else yesBtn.classList.remove('final');
-    }
-
-    function updateProgressBar() {
-      const percent = Math.min(100, Math.floor((yesLevel-1)/12*100));
-      progress.style.width = percent+"%";
-      if(percent >= 100) progressLabel.classList.add('active');
-      else progressLabel.classList.remove('active');
-    }
-
-    function showEmoji() {
-      emoji.classList.add("visible");
-      emoji.textContent = emojis[Math.min(noClicks-1, emojis.length-1)];
-    }
-
     function showPlus1(type) {
       const plus = document.createElement('div');
       plus.className = 'plus1' + (type === 'yes' ? ' blue' : '');
@@ -537,7 +422,6 @@
       plus1Container.appendChild(plus);
       setTimeout(() => plus.remove(), 1100);
     }
-
     function showBear() {
       bear.textContent = bears[Math.floor(Math.random()*bears.length)];
       bear.style.display = "flex";
@@ -546,32 +430,81 @@
       setTimeout(() => { bear.style.opacity = "1"; }, 40);
       setTimeout(() => { bear.style.opacity = "0"; bear.classList.add('hide'); }, 2000);
     }
-
     function showCloud() {
       cloud.textContent = clouds[Math.floor(Math.random()*clouds.length)];
       cloud.style.display = "block";
       setTimeout(() => { cloud.style.display = "none"; }, 2700);
     }
-
     function resetInactivityTimer() {
       clearTimeout(inactivityTimer);
       inactivityTimer = setTimeout(showCloud, 9500);
     }
-
-    function shakeNoBtn() {
-      noBtn.classList.add("shake");
-      setTimeout(() => noBtn.classList.remove("shake"), 350);
+    // --- прогресс ---
+    function updateProgressBar() {
+      const percent = Math.min(100, Math.floor((yesLevel-1)/12*100));
+      progress.style.width = percent+"%";
+      if(percent >= 100) progressLabel.classList.add('active');
+      else progressLabel.classList.remove('active');
     }
-
+    // --- ДА растёт постепенно ---
+    function growYesBtn() {
+      yesLevel++;
+      updateDaBlock();
+      setNoBtnPos();
+      updateProgressBar();
+      if (yesLevel >= 13 && !fullscreened) {
+        yesBtn.classList.add('final');
+        fullscreened = true;
+        gameEnded = true;
+        wowTransition();
+        setTimeout(showHandshake, 500);
+        setTimeout(showPraise, 950);
+        setTimeout(showFortune, 2200);
+        finish();
+      }
+    }
+    function updateDaBlock() {
+      let excls = yesLevel;
+      if (excls <= 6) {
+        daTop.textContent = '';
+        daCenter.textContent = 'ДА' + '!'.repeat(excls);
+        daBottom.textContent = '';
+        yesBtn.classList.remove('mid','big','final');
+        if (excls > 3) yesBtn.classList.add('mid');
+        else yesBtn.classList.remove('mid');
+        if (excls > 5) yesBtn.classList.add('big');
+        else yesBtn.classList.remove('big');
+      } else {
+        let top = Math.ceil(excls/2), bottom = Math.floor(excls/2);
+        daTop.textContent = '!'.repeat(top);
+        daCenter.textContent = 'ДА';
+        daBottom.textContent = '!'.repeat(bottom);
+        yesBtn.classList.add('big');
+        if (excls >= 13) yesBtn.classList.add('final');
+        else yesBtn.classList.remove('final');
+      }
+    }
+    // --- мотивация ---
     function showMotivation(text) {
       motivation.textContent = text;
       motivation.classList.remove('visible');
       void motivation.offsetWidth;
       motivation.classList.add('visible');
     }
-
-    // Микро-игра — если 5 раз подряд "нет" за короткое время
-    let lastActions = [];
+    function showYesMotivation() {
+      const text = yesPhrases[Math.floor(Math.random()*yesPhrases.length)];
+      showMotivation(text);
+    }
+    function showNoMotivation() {
+      const idx = Math.min(noClicks-1, supportPhrases.length-1);
+      showMotivation(supportPhrases[idx]);
+    }
+    // --- смайлы ---
+    function showEmoji() {
+      emoji.classList.add("visible");
+      emoji.textContent = emojis[Math.min(noClicks-1, emojis.length-1)];
+    }
+    // --- микро-игра ---
     function checkEasterEgg() {
       lastActions.push(Date.now());
       if (lastActions.length > 7) lastActions = lastActions.slice(-7);
@@ -589,95 +522,7 @@
       effectsRoot.appendChild(egg);
       setTimeout(()=>egg.remove(),2500);
     }
-
-    // Мотивация для ДА (при клике)
-    function showYesMotivation() {
-      const text = yesPhrases[Math.floor(Math.random()*yesPhrases.length)];
-      showMotivation(text);
-    }
-    // Мотивация для НЕТ (при клике)
-    function showNoMotivation() {
-      const idx = Math.min(noClicks-1, supportPhrases.length-1);
-      showMotivation(supportPhrases[idx]);
-    }
-
-    function spawnPetal() {
-      const petal = document.createElement('div');
-      petal.className = 'petal';
-      petal.style.left = (Math.random()*90+3) + "vw";
-      petal.style.top = "-24px";
-      petal.innerHTML = ['<svg width="24" height="24"><ellipse cx="12" cy="12" rx="8" ry="13" fill="#ffd6f6" /></svg>',
-                        '<svg width="24" height="24"><ellipse cx="12" cy="12" rx="9" ry="12" fill="#b3e9fd" /></svg>',
-                        '<svg width="24" height="24"><ellipse cx="12" cy="13" rx="7" ry="10" fill="#fff6b3" /></svg>',
-                        '<svg width="24" height="24"><ellipse cx="12" cy="12" rx="10" ry="10" fill="#ffe6d6" /></svg>'
-      ][Math.floor(Math.random()*4)];
-      document.body.appendChild(petal);
-      setTimeout(()=>petal.remove(),1700);
-    }
-
-    noBtn.onclick = () => {
-      if (gameEnded) return;
-      noClicks++;
-      actionHistory.push('no');
-      const newNo = noPhrases[Math.min(noClicks, noPhrases.length - 1)];
-      noBtn.textContent = newNo;
-      showNoMotivation();
-      growYesBtn();
-      showEmoji();
-      showPlus1();
-      updateProgressBar();
-      spawnPetal();
-      resetInactivityTimer();
-      checkEasterEgg();
-      if (noClicks === 2 || noClicks === 3 || noClicks === 5 || noClicks === 7) showBear();
-      if (noClicks % 4 === 0) shakeNoBtn();
-    };
-
-    yesBtn.onclick = () => {
-      if (gameEnded) return;
-      yesClicks++;
-      actionHistory.push('yes');
-      showYesMotivation();
-      growYesBtn();
-      showPlus1('yes');
-      updateProgressBar();
-      spawnPetal();
-      resetInactivityTimer();
-    };
-
-    function makeYesFullscreen() {
-      fullscreened = true;
-      gm.classList.add('hidden');
-      mainQ.classList.add('hidden');
-      motivation.classList.add('hidden');
-      noBtn.classList.add('hidden');
-      emoji.classList.remove("visible");
-      emoji.textContent = "";
-      yesBtn.classList.add('final');
-      bear.style.display = "none";
-      cloud.style.display = "none";
-      plus1Container.innerHTML = "";
-      progressLabel.classList.remove('active');
-      wowTransition();
-      setTimeout(showHandshake, 500);
-      setTimeout(showPraise, 950);
-      setTimeout(showFortune, 2200);
-    }
-
-    function finish() {
-      gameEnded = true;
-      document.body.style.background = "linear-gradient(90deg, #38ef7d 0%, #11998e 100%)";
-      showConfetti();
-    }
-
-    function showHandshake() {
-      const hs = document.createElement('div');
-      hs.className = "handshake";
-      hs.innerHTML = "🤝👏";
-      effectsRoot.appendChild(hs);
-      setTimeout(()=>hs.remove(),2000);
-    }
-
+    // --- похвала/рукопожатие/предсказание ---
     function showPraise() {
       const p = document.createElement('div');
       p.className = "praise";
@@ -685,7 +530,13 @@
       effectsRoot.appendChild(p);
       setTimeout(()=>p.remove(),2800);
     }
-
+    function showHandshake() {
+      const hs = document.createElement('div');
+      hs.className = "handshake";
+      hs.innerHTML = "🤝👏";
+      effectsRoot.appendChild(hs);
+      setTimeout(()=>hs.remove(),2000);
+    }
     function showFortune() {
       const f = document.createElement('div');
       f.className = "fortune";
@@ -693,7 +544,7 @@
       effectsRoot.appendChild(f);
       setTimeout(()=>f.remove(),3400);
     }
-
+    // --- вау-переход ---
     function wowTransition() {
       const overlay = document.createElement('div');
       overlay.style.position = 'fixed';
@@ -712,7 +563,10 @@
     const style = document.createElement('style');
     style.innerHTML = `@keyframes wowflash{0%{opacity:0;}20%{opacity:1;}40%{opacity:0.65;}100%{opacity:0;}}`;
     document.head.appendChild(style);
-
+    // --- конфетти ---
+    function finish() {
+      setTimeout(()=>showConfetti(), 400);
+    }
     function showConfetti() {
       confetti.width = window.innerWidth;
       confetti.height = window.innerHeight;
@@ -752,19 +606,14 @@
           ctx.translate(p.x, p.y);
           ctx.rotate(p.angle + frame * p.spin);
           ctx.fillStyle = p.color;
-          if (p.type === "rect") {
-            ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
-          } else if (p.type === "star") {
-            drawStar(ctx, 0, 0, p.size/2, p.size, 5);
-          } else if (p.type === "heart") {
-            drawHeart(ctx, 0, 0, p.size);
-          }
+          if (p.type === "rect") ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+          else if (p.type === "star") drawStar(ctx, 0, 0, p.size/2, p.size, 5);
+          else if (p.type === "heart") drawHeart(ctx, 0, 0, p.size);
           ctx.restore();
           p.y += p.speed;
           if (p.y > confetti.height + 20) p.y = -30;
         }
-        frame++;
-        requestAnimationFrame(draw);
+        frame++; requestAnimationFrame(draw);
       }
       function drawStar(ctx, x, y, r1, r2, n) {
         ctx.beginPath();
@@ -772,12 +621,10 @@
           const r = i%2==0 ? r2 : r1;
           ctx.lineTo(x + r*Math.cos(i*Math.PI/n), y + r*Math.sin(i*Math.PI/n));
         }
-        ctx.closePath();
-        ctx.fill();
+        ctx.closePath(); ctx.fill();
       }
       function drawHeart(ctx, x, y, size) {
-        ctx.save();
-        ctx.scale(size/32, size/32);
+        ctx.save(); ctx.scale(size/32, size/32);
         ctx.beginPath();
         ctx.moveTo(16,29);
         ctx.bezierCurveTo(7,29,2,22,2,15);
@@ -790,28 +637,45 @@
       }
       draw();
     }
+    // --- обработчики ---
 
-    function resetAll() {
-      noClicks = 0;
-      yesClicks = 0;
-      yesLevel = 1;
-      gameEnded = false;
-      fullscreened = false;
-      actionHistory = [];
-      updateDaBlock();
-      gm.classList.remove('hidden');
-      mainQ.classList.remove('hidden');
-      motivation.classList.remove('hidden');
-      motivation.classList.add('visible');
-      motivation.textContent = "Всё получится, даже если волнуешься!";
-      motivation.style.color = "#36417e";
-      motivation.style.background = "#e9eafd";
-      noBtn.classList.remove('hidden','shake');
-      noBtn.textContent = "Нет";
-      noBtn.style.marginTop = "10px";
+    function setNoBtnPos() {
+      const offset = Math.min(18 + (noClicks+yesClicks)*9, 70);
+      noBtn.style.marginTop = offset + "px";
+    }
+    noBtn.onclick = () => {
+      if (gameEnded) return;
+      noClicks++;
+      growYesBtn();
+      showNoMotivation();
+      showPlus1();
+      spawnPetal();
+      updateProgressBar();
+      showEmoji();
+      resetInactivityTimer();
+      checkEasterEgg();
+      if (noClicks === 2 || noClicks === 3 || noClicks === 5 || noClicks === 7) showBear();
+    };
+    yesBtn.onclick = () => {
+      if (fullscreened && gameEnded) {
+        // Переход к следующему этапу! Здесь вставь свой переход:
+        alert('Переходим к следующему этапу!'); // или window.location.href = "next.html";
+        return;
+      }
+      if (gameEnded) return;
+      yesClicks++;
+      growYesBtn();
+      showYesMotivation();
+      showPlus1('yes');
+      spawnPetal();
+      updateProgressBar();
+      resetInactivityTimer();
+    };
+    // --- сброс ---
+    window.onload = () => {
+      noClicks = 0; yesClicks = 0; yesLevel = 1; gameEnded = false; fullscreened = false;
+      updateDaBlock(); setNoBtnPos();
       emoji.classList.remove("visible");
-      emoji.textContent = "";
-      document.body.style.background = "";
       plus1Container.innerHTML = "";
       bear.style.display = "none";
       cloud.style.display = "none";
@@ -820,13 +684,10 @@
       if (confetti) confetti.classList.add('hidden');
       if (effectsRoot) effectsRoot.innerHTML = '';
       yesBtn.classList.remove('final');
-      yesBtn.style.animationDuration = "1.2s";
+      yesBtn.classList.remove('mid','big');
       resetInactivityTimer();
-    }
-
-    window.onload = () => resetAll();
+    };
     window.onresize = () => { if (!gameEnded) setNoBtnPos(); };
-
     document.body.addEventListener('pointerdown', resetInactivityTimer);
     document.body.addEventListener('keydown', resetInactivityTimer);
   </script>

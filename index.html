@@ -70,52 +70,6 @@
       100% { opacity: 1; }
     }
     .btns { display: flex; flex-direction: column; align-items: center; width: 100vw; min-height: 8rem; position: relative; }
-    .yes-btn {
-      background: linear-gradient(90deg, #00b09b 0%, #96c93d 100%);
-      color: #fff;
-      font-size: 1.7rem;
-      font-weight: bold;
-      padding: 1.1rem 2.7rem;
-      border: none;
-      border-radius: 1.3rem;
-      margin-bottom: 1.2rem;
-      margin-top: 0.6rem;
-      cursor: pointer;
-      box-shadow: 0 4px 16px #b3eabf61;
-      z-index: 2;
-      position: relative;
-      min-width: 180px;
-      min-height: 60px;
-      transition: 
-        font-size 0.28s cubic-bezier(.6,1.6,.3,1), 
-        padding 0.28s cubic-bezier(.6,1.6,.3,1),
-        border-radius 0.3s,
-        box-shadow 0.28s cubic-bezier(.6,1.6,.3,1);
-      animation: pulse 1.3s infinite alternate;
-    }
-    .yes-btn.pulse-2 { animation: pulse2 1s infinite alternate; }
-    .yes-btn.pulse-3 { animation: pulse3 0.8s infinite alternate; }
-    .yes-btn.fullscreen {
-      position: fixed !important; left: 0 !important; top: 0 !important;
-      width: 100vw !important; height: 100vh !important; margin: 0 !important;
-      border-radius: 0 !important; font-size: 7vw !important; padding: 0 !important;
-      display: flex; align-items: center; justify-content: center; z-index: 150;
-      animation: none !important; box-shadow: 0 0 80px 40px #21cf8e88;
-      transition: all 0.5s cubic-bezier(.6,1.6,.3,1);
-      background: linear-gradient(90deg, #38ef7d 0%, #11998e 100%) !important;
-    }
-    @keyframes pulse {
-      from { box-shadow: 0 0 18px 6px #54fae2b5; }
-      to   { box-shadow: 0 0 30px 12px #8be58eb3; }
-    }
-    @keyframes pulse2 {
-      from { box-shadow: 0 0 38px 16px #63eebf; }
-      to   { box-shadow: 0 0 55px 26px #c0f04f; }
-    }
-    @keyframes pulse3 {
-      from { box-shadow: 0 0 70px 38px #5fff82b5; }
-      to   { box-shadow: 0 0 90px 60px #fdffaab3; }
-    }
     .no-btn {
       background: linear-gradient(90deg, #ef473a 0%, #cb2d3e 100%);
       color: #fff;
@@ -132,12 +86,7 @@
       display: block;
       position: static;
       z-index: 5;
-      transition: 
-        font-size 0.15s,
-        padding 0.15s,
-        margin-top 0.3s,
-        background 0.13s,
-        filter 0.13s;
+      transition: font-size 0.15s, padding 0.15s, margin-top 0.3s, background 0.13s, filter 0.13s;
     }
     .no-btn.shake {
       animation: shake 0.35s;
@@ -221,7 +170,6 @@
       100% { opacity: 0; top: 20vh;}
     }
     .confetti { position: fixed; left: 0; top: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 999; }
-    /* Микро-игра: пасхалка */
     .easteregg {
       position: fixed;
       left: 50%; top: 18vh; transform: translateX(-50%);
@@ -247,7 +195,6 @@
       80% { opacity: 1;}
       100% { opacity: 0;}
     }
-    /* Похвала после победы */
     .praise {
       position: fixed;
       left: 50%; top: 31vh; transform: translateX(-50%);
@@ -272,7 +219,6 @@
       85% { opacity: 1;}
       100% { opacity: 0; transform: translateX(-50%) scale(0.97);}
     }
-    /* Рукопожатие */
     .handshake {
       position: fixed;
       left: 50%; top: 19vh; transform: translateX(-50%);
@@ -290,7 +236,6 @@
       40% { opacity: 1; }
       100% { opacity: 0; transform: translateX(-50%) scale(0.95);}
     }
-    /* Предсказание */
     .fortune {
       position: fixed;
       left: 50%; bottom: 13vh; transform: translateX(-50%);
@@ -314,7 +259,6 @@
       80% { opacity: 1;}
       100% { opacity: 0;}
     }
-    /* Лепестки */
     .petal {
       position: fixed;
       width: 24px;
@@ -333,15 +277,86 @@
         opacity: 0;
       }
     }
+    /* ——— КНОПКА ДА ——— */
+    .da-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 1.5em auto 1em auto;
+      min-width: 190px;
+      min-height: 130px;
+      background: linear-gradient(90deg, #00b09b 0%, #96c93d 100%);
+      border-radius: 2.3em;
+      box-shadow: 0 6px 28px #7decd5b3, 0 0 40px #baeec1b3;
+      transition: 
+        min-width 0.28s cubic-bezier(.7,1.6,.3,1), 
+        min-height 0.28s cubic-bezier(.7,1.6,.3,1),
+        background 0.35s,
+        box-shadow 0.34s;
+      animation: daPulse 1.2s infinite alternate;
+      position: relative;
+      z-index: 11;
+      padding: 1em 2.4em;
+      max-width: 95vw;
+      max-height: 74vh;
+      cursor: pointer;
+      user-select: none;
+    }
+    @keyframes daPulse {
+      from { box-shadow: 0 0 22px 6px #38ef7db5, 0 0 44px #b6f8c5b3;}
+      to   { box-shadow: 0 0 45px 24px #b4fda4b3, 0 0 75px #e5ffc0b3;}
+    }
+    .da-row {
+      font-size: 2.1rem;
+      color: #fff;
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: 0.11em;
+      min-height: 1.2em;
+      user-select: none;
+      text-align: center;
+      width: 100%;
+      transition: font-size 0.18s;
+      pointer-events: none;
+    }
+    .da-center {
+      font-size: 3.8rem;
+      color: #fff;
+      font-weight: 900;
+      line-height: 1.18;
+      user-select: none;
+      text-shadow: 0 2px 8px #36d67fa7;
+      margin: 0.09em 0 0.09em 0;
+      letter-spacing: 0.2em;
+      text-align: center;
+      transition: font-size 0.2s;
+      pointer-events: none;
+    }
+    .da-block.final {
+      width: 100vw !important; height: 100vh !important;
+      min-width: unset; min-height: unset; max-width: unset; max-height: unset;
+      border-radius: 0 !important; margin: 0 !important; padding: 0 !important;
+      background: linear-gradient(90deg, #38ef7d 0%, #11998e 100%) !important;
+      position: fixed; left: 0; top: 0;
+      z-index: 150;
+      animation: daFinalPulse 0.9s infinite alternate;
+      box-shadow: 0 0 200px 80px #21cf8e88;
+      display: flex; justify-content: center; align-items: center;
+    }
+    @keyframes daFinalPulse {
+      from { box-shadow: 0 0 100px 38px #5fff82b5, 0 0 120px #b6f8c5b3;}
+      to   { box-shadow: 0 0 240px 90px #b4fda4b3, 0 0 300px #e5ffc0b3;}
+    }
     @media (max-width: 600px) {
       .emoji { font-size: 1.45rem; height: 1.7rem; line-height: 1.7rem; margin-bottom: 0.3rem;}
       .goodmorning { font-size: 1.3rem; }
       .main-question { font-size: 1.02rem; }
       .motivation { font-size: 0.92rem; }
-      .yes-btn { font-size: 1.14rem; padding: 0.8rem 1.7rem; }
-      .no-btn { font-size: 0.96rem; padding: 0.65rem 1.15rem; }
       .bear { font-size: 1.4rem; }
       .cloud { font-size: 0.97rem; padding: 0.45em 1em;}
+      .da-row { font-size: 1.11rem;}
+      .da-center { font-size: 2.2rem;}
     }
   </style>
 </head>
@@ -354,7 +369,11 @@
     <div class="main-question" id="mainQ">Ты готова? Ты всё сможешь!</div>
     <div class="motivation visible" id="motivation">Всё получится, даже если волнуешься!</div>
     <div class="btns" style="position:relative;">
-      <button class="yes-btn" id="yesBtn">Да!</button>
+      <div class="da-block" id="daBlock" tabindex="0" role="button">
+        <div class="da-row" id="daTop"></div>
+        <div class="da-center" id="daText">ДА</div>
+        <div class="da-row" id="daBottom"></div>
+      </div>
       <button class="no-btn" id="noBtn">Нет</button>
     </div>
     <div id="plus1-container"></div>
@@ -362,7 +381,6 @@
   <canvas class="confetti hidden" id="confetti"></canvas>
   <div id="bear" style="display:none;"></div>
   <div id="cloud" style="display:none;"></div>
-  <!-- Сюда будут добавляться временные элементы: похвала, рукопожатие, пасхалка, предсказание -->
   <div id="effects-root"></div>
   <script>
     let noClicks = 0;
@@ -447,7 +465,10 @@
       "Любое желание сегодня ближе, чем кажется."
     ];
 
-    const yesBtn = document.getElementById('yesBtn');
+    const yesBtn = document.getElementById('daBlock');
+    const daTop = document.getElementById('daTop');
+    const daCenter = document.getElementById('daText');
+    const daBottom = document.getElementById('daBottom');
     const noBtn = document.getElementById('noBtn');
     const gm = document.getElementById('gm');
     const mainQ = document.getElementById('mainQ');
@@ -463,26 +484,38 @@
     const effectsRoot = document.getElementById('effects-root');
 
     function setNoBtnPos() {
-      noBtn.style.marginTop = (10 + (noClicks+yesClicks) * 18) + "px";
+      const offset = Math.min(10 + (noClicks+yesClicks)*16, window.innerHeight * 0.45); // ограничиваем вниз
+      noBtn.style.marginTop = offset + "px";
     }
 
     function growYesBtn() {
       yesLevel++;
-      yesBtn.textContent = "ДА" + "!".repeat(yesLevel);
-      yesBtn.style.fontSize = (1.7 + yesLevel*0.6) + "rem";
-      yesBtn.style.padding = (1.1 + yesLevel*0.22) + "rem " + (2.7 + yesLevel*0.42) + "rem";
+      updateDaBlock();
       setNoBtnPos();
-      // Светящееся свечение — усиливается с нажатиями
-      yesBtn.classList.remove("pulse-2","pulse-3");
-      if (yesLevel > 3 && yesLevel < 6) yesBtn.classList.add("pulse-2");
-      if (yesLevel >= 6 && yesLevel < 8) yesBtn.classList.add("pulse-3");
-      if (yesLevel >= 12) progressLabel.classList.add('active');
-      // Финал!
+      updateProgressBar();
+      if (yesLevel > 3 && yesLevel < 7) yesBtn.style.animationDuration = "0.95s";
+      if (yesLevel >= 7 && yesLevel < 11) yesBtn.style.animationDuration = "0.75s";
       if (yesLevel >= 13 && !fullscreened) {
-        yesBtn.classList.remove("pulse-2","pulse-3");
         makeYesFullscreen();
         finish();
       }
+    }
+
+    function updateDaBlock() {
+      // Делаем симметричное распределение восклицательных знаков
+      let excls = yesLevel;
+      let top = Math.ceil(excls/2), bottom = Math.floor(excls/2);
+      daTop.textContent = '!'.repeat(top);
+      daCenter.textContent = "ДА";
+      daBottom.textContent = '!'.repeat(bottom);
+      // Блок растёт
+      yesBtn.style.minWidth = (190 + yesLevel*14) + "px";
+      yesBtn.style.minHeight = (130 + yesLevel*10) + "px";
+      daCenter.style.fontSize = (3.8 + yesLevel*0.12) + "rem";
+      daTop.style.fontSize = daBottom.style.fontSize = (2.0 + yesLevel*0.09) + "rem";
+      // финальный режим — full screen
+      if (yesLevel >= 13) yesBtn.classList.add('final');
+      else yesBtn.classList.remove('final');
     }
 
     function updateProgressBar() {
@@ -533,7 +566,6 @@
     function showMotivation(text) {
       motivation.textContent = text;
       motivation.classList.remove('visible');
-      // trigger reflow
       void motivation.offsetWidth;
       motivation.classList.add('visible');
     }
@@ -569,7 +601,6 @@
       showMotivation(supportPhrases[idx]);
     }
 
-    // Украшения — лепестки
     function spawnPetal() {
       const petal = document.createElement('div');
       petal.className = 'petal';
@@ -598,9 +629,7 @@
       spawnPetal();
       resetInactivityTimer();
       checkEasterEgg();
-      // Медвежонок появляется иногда
       if (noClicks === 2 || noClicks === 3 || noClicks === 5 || noClicks === 7) showBear();
-      // Иногда вибрация/дрожь кнопки
       if (noClicks % 4 === 0) shakeNoBtn();
     };
 
@@ -624,17 +653,13 @@
       noBtn.classList.add('hidden');
       emoji.classList.remove("visible");
       emoji.textContent = "";
-      yesBtn.classList.add('fullscreen');
-      yesBtn.textContent = "ДА" + "!".repeat(yesLevel + 2);
+      yesBtn.classList.add('final');
       bear.style.display = "none";
       cloud.style.display = "none";
       plus1Container.innerHTML = "";
       progressLabel.classList.remove('active');
-      // вау-переход: вспышка + пульсация фона
       wowTransition();
-      // анимация рукопожатия
       setTimeout(showHandshake, 500);
-      // похвала + предсказание
       setTimeout(showPraise, 950);
       setTimeout(showFortune, 2200);
     }
@@ -669,7 +694,6 @@
       setTimeout(()=>f.remove(),3400);
     }
 
-    // ВАУ-переход: вспышка + пульсирующий фон
     function wowTransition() {
       const overlay = document.createElement('div');
       overlay.style.position = 'fixed';
@@ -681,12 +705,10 @@
       overlay.style.animation = "wowflash 1s";
       document.body.appendChild(overlay);
       setTimeout(()=>overlay.remove(),900);
-      // фон пульсация (смена фона на 2.5 сек)
       document.body.style.transition = "background 0.28s";
       setTimeout(()=>document.body.style.background = "#e6ffe3",100);
       setTimeout(()=>document.body.style.background = "linear-gradient(90deg, #38ef7d 0%, #11998e 100%)",1200);
     }
-    // flash animation
     const style = document.createElement('style');
     style.innerHTML = `@keyframes wowflash{0%{opacity:0;}20%{opacity:1;}40%{opacity:0.65;}100%{opacity:0;}}`;
     document.head.appendChild(style);
@@ -697,7 +719,6 @@
       confetti.classList.remove('hidden');
       const ctx = confetti.getContext('2d');
       const pieces = [];
-      // --- звёздочки и сердечки
       for (let i = 0; i < 40; i++) {
         pieces.push({
           x: Math.random() * confetti.width,
@@ -710,7 +731,6 @@
           size: Math.random()*19+14
         });
       }
-      // обычные конфетти
       for (let i = 0; i < 100; i++) {
         pieces.push({
           x: Math.random() * confetti.width,
@@ -778,11 +798,7 @@
       gameEnded = false;
       fullscreened = false;
       actionHistory = [];
-      yesBtn.textContent = "Да!";
-      yesBtn.classList.remove('fullscreen','pulse-2','pulse-3');
-      yesBtn.style.fontSize = "";
-      yesBtn.style.padding = "";
-      yesBtn.style.borderRadius = "";
+      updateDaBlock();
       gm.classList.remove('hidden');
       mainQ.classList.remove('hidden');
       motivation.classList.remove('hidden');
@@ -803,6 +819,8 @@
       progressLabel.classList.remove('active');
       if (confetti) confetti.classList.add('hidden');
       if (effectsRoot) effectsRoot.innerHTML = '';
+      yesBtn.classList.remove('final');
+      yesBtn.style.animationDuration = "1.2s";
       resetInactivityTimer();
     }
 

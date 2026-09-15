@@ -1,0 +1,41 @@
+name: Temporary Whisper bundle
+
+on:
+  push:
+    branches:
+      - chatgpt-whisper-bundle-20260915
+    paths:
+      - .github/workflows/chatgpt-whisper-bundle.yml
+
+permissions:
+  contents: read
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Whisper CLI and Russian-capable model
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p bundle/bin bundle/model extracted
+          curl --fail --location --retry 3 \
+            https://github.com/ggml-org/whisper.cpp/releases/download/b5130/whisper-bin-ubuntu-x64.tar.gz \
+            --output whisper-bin.tar.gz
+          tar -xzf whisper-bin.tar.gz -C extracted
+          cp -a extracted/. bundle/bin/
+          curl --fail --location --retry 3 \
+            https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small-q5_1.bin \
+            --output bundle/model/ggml-small-q5_1.bin
+          find bundle -maxdepth 4 -type f -printf '%p %s bytes\n'
+
+      - name: Upload bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: whisper-linux-small-q5_1
+          path: bundle
+          compression-level: 0
+          retention-days: 1
